@@ -121,6 +121,18 @@ The following pain points are recurring topics in the literature, have been enco
  </tbody>
 </table>
 
+At its highest level, the architecture is dictated by a twofold separation:
+
+* Business logic needs to be disentangled from cryptography protocols (separation of concerns, dependency inversion)
+*	Data flows of different data owners need to be separated from one another until they hit the underlying cryptography layer (privacy)
+
+The first point is conveniently solved by a client/server architecture. Providing server-side PPC protocols through microservices and a web API to the client-side business logic addresses several of the above design goals.
+
+However, if clients are to be entirely free of any cryptography concerns, they cannot send cryptographic shares to the server, but need to be able to send raw data in the clear. This is also true because the client should be agnostic to which particular PPC protocol is run by the server, as different protocols require quite different generation of shares.
+
+Favoring minimalistic lean clients and simplicity of the client-side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
+The resulting and remaining decisions are:
+
 # Results
 
 # Conclusion
