@@ -42,26 +42,82 @@ Presently, PPC still has several barriers to entry. Some are one the business si
 
 The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns:
 
-|     pain points                                                                                           |     design goals                                                                                      |
-|-----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-|     ** related to capabilities (C) **                                                                     |                                                                                                       |
-|     front-end and business logic developers   rarely have any expert knowledge in PPC                     |     provide high-level computing routines that hide low-level cryptography   protocols (C1)           |
-|     PPC is   inaccessible to marginal groups lacking computing and personal resources                     |     build a   minimalistic solution that can be run by a single developer on a Raspberry Pi   (C2)    |
-|     PPC is difficult to teach and to experience   in the limited time frame of a typical lesson           |     provide a propaedeutic solution that works in a school or university   teaching setting (C3)      |
-|     related to development (D)                                                                            |                                                                                                       |
-|     PPC often appears as the core functionality,   so far as to even require to be a main routine         |     PPC should be a network-level concern and separated from high-level   concerns (D1)               |
-|     introducing   PPC functionality to a business logic often requires a complete rework                  |     enable   piecewise introduction of PPC into an existing legacy business logic codebase   (D2)     |
-|     PPC frameworks require a specific tech stack   and introduce a lot of dependencies                    |     the client-side and the core of the server-side should be free of any   dependencies (D3)         |
-|     coding   for any particular PPC framework locks the developer to a specific language                  |     let   client-side developers freely choose their language or keep using the legacy   one (D4)     |
-|     ** related   to security concerns (S) **                                                              |                                                                                                       |
-|     some PPC   frameworks are developed by non-experts in cryptography and are unsafe                     |     do not   reinvent the wheel, make use of existing and proven PPC frameworks (S1)                  |
-|     PPC involves sensitive data that should not   be visible to the front-end or the outside              |     enable topologies with data flow confined to trusted machines on the   backend (S2)               |
-|     many PPC   use cases involve a third-party researcher who must be able to run analyses                |     enable   topologies with control flow coming from an external researcher (S3)                     |
-|     every PPC calculation requires a complete   re-evaluation by data security officers                   |     separate topology, protocol, and function so they can be assessed   independently (S4)            |
-|     ** related to deployment and operation (O) **                                                         |                                                                                                       |
-|     PPC often requires all parties to agree on   the exact same tech stack and IT environment             |     enable joint computation between parties using different hardware and   software (O1)             |
-|     without   a lot of experience, it is often unclear which PPC framework is best suited   for a task    |     frameworks   should be replaceable without the need to rewrite the business logic (O2)            |
-|     universal PPC solutions often have enormous   overhead in terms of space and processing               |     provide “small and fast” solutions that cater to the most often   encountered tasks (O3)          |
+<table cellspacing="0" cellpadding="0" border="1">
+ <tbody>
+  <tr>
+   <td><strong>pain points</strong></td>
+   <td><strong>design goals</strong></td>
+  </tr>
+  <tr>
+   <td colspan="2"><strong>related to capabilities (C)</strong></td>
+  </tr>
+  <tr>
+   <td>front-end and business logic developers rarely have any expert knowledge in PPC</td>
+   <td>provide high-level computing routines that hide low-level cryptography protocols <strong>(C1)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC is inaccessible to marginal groups lacking computing and personal resources</td>
+   <td>build a minimalistic solution that can be run by a single developer on a Raspberry Pi <strong>(C2)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC is difficult to teach and to experience in the limited time frame of a typical lesson</td>
+   <td>provide a propaedeutic solution that works in a school or university teaching setting <strong>(C3)</strong></td>
+  </tr>
+  <tr>
+   <td colspan="2"><strong>related to development (D)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC often appears as the core functionality, so far as to even require to be a main routine</td>
+   <td>PPC should be a network-level concern and separated from high-level concerns <strong>(D1)</strong></td>
+  </tr>
+  <tr>
+   <td>introducing PPC functionality to a business logic often requires a complete rework</td>
+   <td>enable piecewise introduction of PPC into an existing legacy business logic codebase <strong>(D2)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC frameworks require a specific tech stack and introduce a lot of dependencies</td>
+   <td>the client-side and the core of the server-side should be free of any dependencies <strong>(D3)</strong></td>
+  </tr>
+  <tr>
+   <td>coding for any particular PPC framework locks the developer to a specific language</td>
+   <td>let client-side developers freely choose their language or keep using the legacy one <strong>(D4)</strong></td>
+  </tr>
+  <tr>
+   <td colspan="2"><strong>related to security concerns (S)</strong></td>
+  </tr>
+  <tr>
+   <td>some PPC frameworks are developed by non-experts in cryptography and are unsafe</td>
+   <td>do not reinvent the wheel, make use of existing and proven PPC frameworks <strong>(S1)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC involves sensitive data that should not be visible to the front-end or the outside</td>
+   <td>enable topologies with data flow confined to trusted machines on the backend <strong>(S2)</strong></td>
+  </tr>
+  <tr>
+   <td>many PPC use cases involve a third-party researcher who must be able to run analyses</td>
+   <td>enable topologies with control flow coming from an external researcher <strong>(S3)</strong></td>
+  </tr>
+  <tr>
+   <td>every PPC calculation requires a complete re-evaluation by data security officers</td>
+   <td>separate topology, protocol, and function so they can be assessed independently <strong>(S4)</strong></td>
+  </tr>
+  <tr>
+   <td colspan="2"><strong>related to deployment and operation (O)</strong></td>
+  </tr>
+  <tr>
+   <td>PPC often requires all parties to agree on the exact same tech stack and IT environment</td>
+   <td>enable joint computation between parties using different hardware and software <strong>(O1)</strong></td>
+  </tr>
+  <tr>
+   <td>without a lot of experience, it is often unclear which PPC framework is best suited for a task</td>
+   <td>frameworks should be replaceable without the need to rewrite the business logic <strong>(O2)</strong></td>
+  </tr>
+  <tr>
+   <td>universal PPC solutions often have enormous overhead in terms of space and processing</td>
+   <td>provide “small and fast” solutions that cater to the most often encountered tasks <strong>(O3)</strong></td>
+  </tr>
+ </tbody>
+</table>
 
 # Results
 
