@@ -12,4 +12,4 @@ Ballhausen, H (LMU Munich)
 
 # Results
 
-# Discussion
+# Conclusion
