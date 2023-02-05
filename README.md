@@ -319,6 +319,38 @@ class Representation:
         return self.api.call(self.uuid, *args, **kwargs)
 ```
 
+For example, `database.get_handle().query(row=2, column=5)` in fact creates four (!) representations: 1) of the member function `get_handle`, 2) of the result of invoking that member function without arguments, 3) of that result’s member function `query`, and 4) of the result of `query` with some arguments.
+
+Note that such nice syntactic sugar is not available in all programming languages. For example, in R the same code would read:
+
+```r
+source (“.../federatedsecure/client.r”)
+
+# connect to the server, return API handle
+api <- Api(“https://my.server”)
+
+# find a microservice that matches some requirements
+microservice <- api$create(kwargs=list(
+                  functionality=“can do some stuff”))
+
+# connect to some specific server-side database
+database <- api$create(kwargs=list(
+              connector=“myconnector”, version=“1.2.3”))
+
+# fetch input data
+func_handle <- database$attribute(“get_handle”)
+handle <- func_handle$call()
+func_query <- handle$attribute(“query”)
+data <- func_query$call(list(row=2, column=5))
+
+# do some server-side computation
+func_compute <- microservice$attribute(“compute”)
+result <- func_compute$call(list(data=data))
+
+# download and output the result
+print(api$download(result))
+```
+
 (... to do ...)
 
 # Results
