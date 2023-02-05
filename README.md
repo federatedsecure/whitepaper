@@ -454,6 +454,46 @@ By using `Representation` the entire API traffic can be routed through very few 
  </tbody>
 </table>
 
+In these terms, it is easy to implement `api.create`, `api.download`, `api.call`, and `api.download` as used in the main routine and in  Representation above:
+
+```python
+class Api:
+
+    def __init__(self, url):
+        self.http = HttpInterface(url)
+
+    def list(self):
+        return self.http.GET('representations')
+
+    def create(self, *args, **kwargs):
+        response = self.http.POST('representations',
+                   body={'args': args, 'kwargs': kwargs})
+        return Representation(self, response['uuid'])
+
+    def upload(self, *args, **kwargs):
+        response = self.http.PUT('representations',
+                   body={'args': args, 'kwargs': kwargs})
+        return Representation(self, response['uuid'])
+
+    def call(self, uuid, *args, **kwargs):
+        response = self.http.PATCH('representation', uuid,
+                   body={'args': args, 'kwargs': kwargs})
+        return Representation(self, response['uuid'])
+
+    def attribute(self, uuid, attr):
+        response = self.http.GET('representation', uuid, attr)
+        return Representation(self, response['uuid'])
+
+    def download(self, representation):
+        response = self.http.GET('representation',
+                   representation.uuid)
+        return response['object']
+
+    def release(self, uuid):
+        self.http.DELETE('representation', uuid)
+        return None
+```
+
 (... to do ...)
 
 # Results
