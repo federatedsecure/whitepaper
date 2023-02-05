@@ -36,7 +36,7 @@ Federated Secure Computing is a free and open-source software (FOSS) initiative 
 
 # Methods (Architecture)
 
-# Pain Points and Design Goals
+## Pain Points and Design Goals
 
 # Results
 
