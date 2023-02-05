@@ -44,7 +44,7 @@ The following pain points are recurring topics in the literature, have been enco
 
 |     pain points                                                                                           |     design goals                                                                                      |
 |-----------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-|     related to capabilities (C)                                                                           |                                                                                                       |
+|     ** related to capabilities (C) **                                                                     |                                                                                                       |
 |     front-end and business logic developers   rarely have any expert knowledge in PPC                     |     provide high-level computing routines that hide low-level cryptography   protocols (C1)           |
 |     PPC is   inaccessible to marginal groups lacking computing and personal resources                     |     build a   minimalistic solution that can be run by a single developer on a Raspberry Pi   (C2)    |
 |     PPC is difficult to teach and to experience   in the limited time frame of a typical lesson           |     provide a propaedeutic solution that works in a school or university   teaching setting (C3)      |
@@ -53,12 +53,12 @@ The following pain points are recurring topics in the literature, have been enco
 |     introducing   PPC functionality to a business logic often requires a complete rework                  |     enable   piecewise introduction of PPC into an existing legacy business logic codebase   (D2)     |
 |     PPC frameworks require a specific tech stack   and introduce a lot of dependencies                    |     the client-side and the core of the server-side should be free of any   dependencies (D3)         |
 |     coding   for any particular PPC framework locks the developer to a specific language                  |     let   client-side developers freely choose their language or keep using the legacy   one (D4)     |
-|     related   to security concerns (S)                                                                    |                                                                                                       |
+|     ** related   to security concerns (S) **                                                              |                                                                                                       |
 |     some PPC   frameworks are developed by non-experts in cryptography and are unsafe                     |     do not   reinvent the wheel, make use of existing and proven PPC frameworks (S1)                  |
 |     PPC involves sensitive data that should not   be visible to the front-end or the outside              |     enable topologies with data flow confined to trusted machines on the   backend (S2)               |
 |     many PPC   use cases involve a third-party researcher who must be able to run analyses                |     enable   topologies with control flow coming from an external researcher (S3)                     |
 |     every PPC calculation requires a complete   re-evaluation by data security officers                   |     separate topology, protocol, and function so they can be assessed   independently (S4)            |
-|     related to deployment and operation (O)                                                               |                                                                                                       |
+|     ** related to deployment and operation (O) **                                                         |                                                                                                       |
 |     PPC often requires all parties to agree on   the exact same tech stack and IT environment             |     enable joint computation between parties using different hardware and   software (O1)             |
 |     without   a lot of experience, it is often unclear which PPC framework is best suited   for a task    |     frameworks   should be replaceable without the need to rewrite the business logic (O2)            |
 |     universal PPC solutions often have enormous   overhead in terms of space and processing               |     provide “small and fast” solutions that cater to the most often   encountered tasks (O3)          |
