@@ -265,6 +265,62 @@ In a way, this is a combination of Example 2 (a single researcher) and Example 3
 
 It might be useful if one wants to use client-side languages other than R to develop scripts; or it might be convenient to include DataSHIELD for its statistical power to process e.g. metadata of data that is analyzed in full by other protocols such as secure multiparty computation.
 
+## Client-Side Stack
+
+### Representation of server-side objects
+
+Our design goal is to render client-side business-logic development as simple as possible. We do not want any specific dependencies client-side, and we would like to go through the API as transparent as possible. Hence, we would like to be able to write client-side code like this:
+
+```python
+import federatedsecure.client
+
+# connect to the server, return API handle
+api = federatedsecure.client.connect(“https://my.server”)
+
+# find a microservice that matches some requirements
+microservice = api.create(functionality=“can do some stuff”})
+
+# connect to some specific server-side database
+database = api.create(connector=“myconnector”, version=“1.2.3”)
+
+# fetch input data
+data = database.get_handle().query(row=2, column=5)
+
+# do some server-side computation
+result = microservice.compute(data)
+
+# download and output the result
+print(api.download(result))
+```
+
+There are two functions that translate between server-side and client-side:
+
+`api.create` returns a handle to a top-level server-side object, typically a microservice. It is given some arguments describing the desired microservice. 
+
+`api.download` serializes the server-side data belonging to some handle and returns it to the client.
+
+This means that all the other variables in above pseudocode (`microservice`, `database`, `data`, and `result`) are simply handles to server-side objects. The client can access them through the API and trigger server-side behavior without any client-side dependencies. We achieve this by using a wrapper class called `Representation`.
+
+As its name implies, it represents server-side objects. It stores a pointer to the API (so it can trigger requests to the API) and a unique identifier (UUID) of the server-side object. Access to member variables and functions can then be reflected on the API by passing the UUID.
+
+In Python, this is particularly straightforward:
+
+```python
+class Representation:
+
+  def __init__(self, api, uuid):
+    self.api = api
+    self.uuid = uuid
+
+    def __getattr__(self, member_name):
+      return self.api.attribute(self.uuid, member_name)
+
+    def __call__(self, *args, **kwargs):
+        return self.api.call(self.uuid, *args, **kwargs)
+```
+
+(... to do ...)
+
 # Results
 
 (... to do ...)
