@@ -223,7 +223,7 @@ This topology is suitable when there are several equal and simultaneously active
 
 Clients send unencrypted input data and control flow to their respective server. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients.
 
-The propaedeutic protocol ***SIMON** (**SI**mple **M**ultiparty computati**ON**) uses this topology.
+The propaedeutic protocol **SIMON** (**SI**mple **M**ultiparty computati**ON**) uses this topology.
 
 # Results
 
