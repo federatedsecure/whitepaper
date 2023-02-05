@@ -239,6 +239,20 @@ Using server-side object representation, it is possible to write wrappers for se
 
 This topology is suitable if there is a privileged researcher and a number of independent contributors. For example, a university hospital researching the data of teaching hospitals; a government agency using data of regional bodies; a parent company analyzing subsidiaries; an industry association providing benchmarks to their member companies; etc. 
 
+### Example 3: servers run middleware only, additional compute nodes in the backend
+
+Some PPC protocols might require a certain compute cluster of their own. For example, some SMPC protocols use three independent compute nodes, irrespective of the number of data nodes.
+
+![](images/example3.png)
+
+In this case, the role of the Federated Secure Computing servers is “only” to act as a gateway hosting a translatory middleware.
+
+They middleware receives input data and translates it into cryptographic shares according to the protocol of the compute cluster; the middleware receives control flow from the client and accordingly instructs the compute cluster.
+
+This topology is useful if one wants to combine the client-side simplicity of Federated Secure Computing with a more mature and complete solution to run the actual computations on the backend.
+
+For example, a [Carbyne Stack](https://carbynestack.io) compute cluster would be a useful backend.
+
 (... to do ...)
 
 # Results
