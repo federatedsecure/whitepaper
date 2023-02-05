@@ -253,7 +253,17 @@ This topology is useful if one wants to combine the client-side simplicity of Fe
 
 For example, a [Carbyne Stack](https://carbynestack.io) compute cluster would be a useful backend.
 
-(... to do ...)
+### Example 4: DataSHIELD
+
+[DataSHIELD](https://www.datashield.org) is a popular PPC solution in academic and data science settings. It features a central compute node that receives aggregated data from data nodes, aggregates it further, and forwards the summary statistics to the researcher.
+
+If one wants to capsulate the DataSHIELD server behind a Federated Secure Computing middleware, the topology will look like this figure:
+
+![](images/example4.png)
+
+In a way, this is a combination of Example 2 (a single researcher) and Example 3 (pure middleware functionality of Federated Secure Computing).
+
+It might be useful if one wants to use client-side languages other than R to develop scripts; or it might be convenient to include DataSHIELD for its statistical power to process e.g. metadata of data that is analyzed in full by other protocols such as secure multiparty computation.
 
 # Results
 
