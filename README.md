@@ -217,7 +217,9 @@ In PPC lingo, there are <strong>data nodes</strong> (providing input data), <str
 
 ### Example 1: clients act as data and researcher nodes, servers act as compute nodes
 
-This is a topology is suitable when there are several equal and simultaneously active researchers in a symmetric peer-to-peer network.
+This topology is suitable when there are several equal and simultaneously active researchers in a symmetric peer-to-peer network.
+
+![](images/example1.png)
 
 Clients send unencrypted input data and control flow to their respective server. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients.
 
