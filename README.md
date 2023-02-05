@@ -133,6 +133,82 @@ However, if clients are to be entirely free of any cryptography concerns, they c
 Favoring minimalistic lean clients and simplicity of the client-side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
 The resulting and remaining decisions are:
 
+### Table 2 – design decisions and their rationale
+
+<table cellspacing="0" cellpadding="0" border="1">
+ <tbody>
+  <tr>
+   <td><strong>decision</strong></td>
+   <td><strong>rationale and addressed design goals</strong></td>
+  </tr>
+  <tr>
+   <td><strong>client-server</strong>architecture</td>
+   <td>
+    <ul>
+     <li>offload computationally expensive cryptography to the server <strong>(D1)</strong></li>
+     <li>separate business logic concerns (client-side) from cryptography concerns (server-side)<strong>(C1, D1, O2)</strong></td></li>
+    </ul>
+  </tr>
+  <tr>
+   <td>one <strong>dedicated server</strong> per client</td>
+   <td>
+    <ul>
+     <li>allows clients to remain lightweight and generalist API wrappers without specific encryption logic <strong>(D3)</strong></li>
+     <li>servers can be trusted by their own client/data owner <strong>(S2, S3)</strong></li>
+     <li>for less attack surface, it is possible to keep data entirely server-side with only control flow coming from the client <strong>(S2, S3)</strong></li>
+     <li>easy to analyze and straightforward to secure <strong>(S4, S2)</strong></li>
+     <li>easy to explain and understand in a propaedeutic setting <strong>(C3)</strong></li>
+  </tr>
+  <tr>
+   <td>solution should be a <strong>middleware</strong></td>
+   <td>
+    <ul>
+     <li>encapsulate low-level cryptographic scripts and provide them to the client as high-level macros <strong>(C1, D1)</strong></li>
+     <li>provide the same macros for different PPC backends <strong>(O2, S4)</strong></li>
+     <li>hosting one or several established PPC frameworks <strong>(S1)</strong></li>
+     </li>
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td>provide <strong>microservices</strong> ...</td>
+   <td>
+    <ul>
+     <li>rebuild business logic piecewise in a privacy friendly fashion <strong>(D2)</strong></li>
+     <li>provide highly optimized microservices for specific business problems instead of slow universal monoliths <strong>(O3, C2)</strong></li>
+  </tr>
+  <tr>
+   <td>... through a <strong>RESTful API</strong></td>
+   <td>
+    <ul>
+     <li>easy to provide API wrapper in any programming language <strong>(D4)</strong></li>
+     <li>client remains free of any PPC-specific dependencies <strong>(D3)</strong></li>
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td>represent <strong>server-side objects</strong> 1:1 client-side</td>
+   <td>
+    <ul>
+     <li>make client-side code easy to read and write <strong>(D1, C1, C3)</strong></li>
+     <li>allow the client to remain lightweight yet powerful <strong>(D3, C2, C3)</strong></li>
+     <li>allow server-side-only data flow <strong>(S2, S3, S4)</strong></li>
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td>implement server middleware in <strong>Python </strong> (optional)</td>
+   <td>
+    <ul>
+     <li>core middleware can be implemented in pure Python without any additional dependencies except for a webserver <strong>(D3)</strong></li>
+     <li>Python is available on most any platform <strong>(O1, C2)</strong></li>
+     <li>Python is popular in propaedeutic settings and data science <strong>(C3)</strong></li>
+    </ul>
+   </td>
+  </tr>
+ </tbody>
+</table>
+
 # Results
 
 # Conclusion
