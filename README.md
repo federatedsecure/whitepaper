@@ -30,6 +30,8 @@ The server-side implementation is 100% Python with no tech stack needed beyond a
 
 ## Conclusion
 
+Federated Secure Computing is a free and open-source software (FOSS) initiative funded by Stifterverband and maintained by LMU Munich. The architecture aims to render PPC more accessible and inclusive, as a first steppingstone to build privacy-friendly applications. We hope this whitepaper enables anyone to join the ecosystem, and we are welcoming contributions.
+
 # Background
 
 # Methods (Architecture)
