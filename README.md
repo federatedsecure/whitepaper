@@ -44,7 +44,7 @@ Presently, PPC still has several barriers to entry. Some are one the business si
 
 The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns:
 
-### Table 1 – pain points and derived design goals
+#### Table 1 – pain points and derived design goals
 
 <table cellspacing="0" cellpadding="0" border="1">
  <tbody>
@@ -135,7 +135,7 @@ However, if clients are to be entirely free of any cryptography concerns, they c
 Favoring minimalistic lean clients and simplicity of the client-side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
 The resulting and remaining decisions are:
 
-### Table 2 – design decisions and their rationale
+#### Table 2 – design decisions and their rationale
 
 <table cellspacing="0" cellpadding="0" border="1">
  <tbody>
@@ -221,6 +221,7 @@ In PPC lingo, there are <strong>data nodes</strong> (providing input data), <str
 
 This topology is suitable when there are several equal and simultaneously active researchers in a symmetric peer-to-peer network.
 
+#### Figure 1
 ![](images/example1.png)
 
 Clients send unencrypted input data and control flow to their respective server. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients.
@@ -230,6 +231,8 @@ The propaedeutic protocol **SIMON** (**SI**mple **M**ultiparty computati**ON**) 
 ### Example 2: servers act as data and compute nodes, single client as researcher node
 
 The difference to Example 1 is that data is hosted on the server, not on the client. This is a more likely case in institutions where data is not supposed to be seen even by their own clients and researchers.
+
+#### Figure 2
 
 ![](images/example2.png)
 
@@ -242,6 +245,8 @@ This topology is suitable if there is a privileged researcher and a number of in
 ### Example 3: servers run middleware only, additional compute nodes in the backend
 
 Some PPC protocols might require a certain compute cluster of their own. For example, some SMPC protocols use three independent compute nodes, irrespective of the number of data nodes.
+
+#### Figure 3
 
 ![](images/example3.png)
 
@@ -259,6 +264,8 @@ For example, a [Carbyne Stack](https://carbynestack.io) compute cluster would be
 
 If one wants to capsulate the DataSHIELD server behind a Federated Secure Computing middleware, the topology will look like this figure:
 
+#### Figure 4
+
 ![](images/example4.png)
 
 In a way, this is a combination of Example 2 (a single researcher) and Example 3 (pure middleware functionality of Federated Secure Computing).
@@ -270,6 +277,8 @@ It might be useful if one wants to use client-side languages other than R to dev
 ### Representation of server-side objects
 
 Our design goal is to render client-side business-logic development as simple as possible. We do not want any specific dependencies client-side, and we would like to go through the API as transparent as possible. Hence, we would like to be able to write client-side code like this:
+
+#### Code Listing 1 – Example of how client-side code should interact with server-side objects
 
 ```python
 import federatedsecure.client
@@ -305,6 +314,8 @@ As its name implies, it represents server-side objects. It stores a pointer to t
 
 In Python, this is particularly straightforward:
 
+#### Code Listing 2 – class Representation (simplified, see actual code!)
+
 ```python
 class Representation:
 
@@ -322,6 +333,8 @@ class Representation:
 For example, `database.get_handle().query(row=2, column=5)` in fact creates four (!) representations: 1) of the member function `get_handle`, 2) of the result of invoking that member function without arguments, 3) of that result’s member function `query`, and 4) of the result of `query` with some arguments.
 
 Note that such nice syntactic sugar is not available in all programming languages. For example, in R the same code would read:
+
+#### Code Listing 3 – In some languages, client code will be more verbose than in Python
 
 ```r
 source (“.../federatedsecure/client.r”)
