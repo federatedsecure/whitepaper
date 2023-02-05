@@ -42,6 +42,8 @@ Presently, PPC still has several barriers to entry. Some are one the business si
 
 The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns:
 
+### Table 1 – pain points and derived design goals
+
 <table cellspacing="0" cellpadding="0" border="1">
  <tbody>
   <tr>
