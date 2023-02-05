@@ -24,6 +24,10 @@ Control flow happens through microservices provided by an Open API 3.0 interface
 
 ## Results
 
+A free and open-source implementation is provided at github.com/federatedsecure
+
+The server-side implementation is 100% Python with no tech stack needed beyond a standard webserver such as Connexion or Django (both are provided as stubs). The client-side implementation is just a thin API wrapper, available in several programming languages. A simple multiparty computation (“Simon”) protocol is provided as propaedeutic example of a cryptographic backend. 
+
 ## Conclusion
 
 # Background
