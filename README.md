@@ -227,6 +227,18 @@ Clients send unencrypted input data and control flow to their respective server.
 
 The propaedeutic protocol **SIMON** (**SI**mple **M**ultiparty computati**ON**) uses this topology.
 
+### Example 2: servers act as data and compute nodes, single client as researcher node
+
+The difference to Example 1 is that data is hosted on the server, not on the client. This is a more likely case in institutions where data is not supposed to be seen even by their own clients and researchers.
+
+![](images/example2.png)
+
+In this case, there is no need for more than one researcher (of course, having one researcher per server is still perfectly an option). The single researcher may send control flow to all servers (rendering synchronization trivial) and receive only the result of the computation (but has no access to input data on the servers).
+
+Using server-side object representation, it is possible to write wrappers for server-side data base handles and access them through the client. Care must be taken in this case to properly secure the API, in particular by object level authorization.
+
+This topology is suitable if there is a privileged researcher and a number of independent contributors. For example, a university hospital researching the data of teaching hospitals; a government agency using data of regional bodies; a parent company analyzing subsidiaries; an industry association providing benchmarks to their member companies; etc. 
+
 (... to do ...)
 
 # Results
