@@ -6,6 +6,14 @@ Ballhausen, H (LMU Munich)
 
 # Abstract
 
+## Background and Motivation
+
+## Methods
+
+## Results
+
+## Conclusion
+
 # Background
 
 # Methods (Architecture)
