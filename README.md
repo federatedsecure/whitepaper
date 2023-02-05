@@ -38,6 +38,10 @@ Federated Secure Computing is a free and open-source software (FOSS) initiative 
 
 ## Pain Points and Design Goals
 
+Presently, PPC still has several barriers to entry. Some are one the business side (lacking financial incentives, unproven business models) ore purely historical (lack of visible role models and successful show cases). These are out of the scope. However, many barriers are related to rather technical pain points that render development, deployment, and operation of PPC solutions cumbersome and difficult. These can and should be addressed by the architecture.
+
+The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns:
+
 # Results
 
 # Conclusion
