@@ -34,6 +34,8 @@ Federated Secure Computing is a free and open-source software (FOSS) initiative 
 
 # Background
 
+(... to do ...)
+
 # Methods (Architecture)
 
 ## Pain Points and Design Goals
@@ -225,6 +227,12 @@ Clients send unencrypted input data and control flow to their respective server.
 
 The propaedeutic protocol **SIMON** (**SI**mple **M**ultiparty computati**ON**) uses this topology.
 
+(... to do ...)
+
 # Results
 
+(... to do ...)
+
 # Conclusion
+
+(... to do ...)
