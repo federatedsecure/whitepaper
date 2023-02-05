@@ -209,6 +209,20 @@ The resulting and remaining decisions are:
  </tbody>
 </table>
 
+## Client-Server Topologies
+
+While the decision to have exactly one server per data owner seems to be quite strong, there really is no restriction on the actual topology of the PPC protocols employed in the backend.
+
+In PPC lingo, there are <strong>data nodes</strong> (providing input data), <strong>compute nodes</strong> (running the protocols), and <strong>researcher nodes</strong> (providing control flow and receiving results). Here, we have <strong>server nodes</strong> and <strong>client nodes</strong> which may or may not coincide with data, compute, and/or researcher nodes.
+
+### Example 1: clients act as data and researcher nodes, servers act as compute nodes
+
+This is a topology is suitable when there are several equal and simultaneously active researchers in a symmetric peer-to-peer network.
+
+Clients send unencrypted input data and control flow to their respective server. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients.
+
+The propaedeutic protocol SIMON (SImple Multiparty computatiON) uses this topology.
+
 # Results
 
 # Conclusion
