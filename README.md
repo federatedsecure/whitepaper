@@ -47,11 +47,13 @@ The following pain points are recurring topics in the literature, have been enco
 #### Table 1 – pain points and derived design goals
 
 <table cellspacing="0" cellpadding="0" border="1">
- <tbody>
+ <thead>
   <tr>
    <td><strong>pain points</strong></td>
    <td><strong>design goals</strong></td>
   </tr>
+ </thead>
+ <tbody>
   <tr>
    <td colspan="2"><strong>related to capabilities (C)</strong></td>
   </tr>
@@ -138,11 +140,13 @@ The resulting and remaining decisions are:
 #### Table 2 – design decisions and their rationale
 
 <table cellspacing="0" cellpadding="0" border="1">
- <tbody>
+ <thead>
   <tr>
    <td><strong>decision</strong></td>
    <td><strong>rationale and addressed design goals</strong></td>
   </tr>
+ </thead>
+ <tbody>
   <tr>
    <td><strong>client-server</strong>architecture</td>
    <td>
@@ -363,6 +367,92 @@ result <- func_compute$call(list(data=data))
 # download and output the result
 print(api$download(result))
 ```
+
+### API Wrapper
+
+By using `Representation` the entire API traffic can be routed through very few RESTful endpoints:
+
+<table>
+ <thead>
+  <tr>
+   <td>verb</td>
+   <td>endpoint</td>
+   <td>server-side effect and response</td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>GET</td>
+   <td>/representations</td>
+   <td>
+    <ul>
+     <li>list of top-level microservices
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td>POST</td>
+   <td>/representations</td>
+   <td>
+    <ul>
+     <li>finds matching top-level microservice
+     <li>returns uuid representing the microservice
+    </ul>
+   </td>
+ </tr>
+  <tr>
+   <td>PUT</td>
+   <td>/representations</td>
+   <td>
+    <ul>
+     <li>upload data and stores it server-side
+     <li>returns uuid representing the data
+    </ul>
+   </td>
+ </tr>
+  <tr>
+   <td>PATCH</td>
+   <td>/representation/{uuid}</td>
+   <td>
+    <ul>
+     <li>calls server-side function represented by uuid
+     <li>stores the return value server-side
+     <li>returns uuid representing the return value
+    </ul>
+   </td>
+ </tr>
+  <tr>
+   <td>GET</td>
+   <td>/representation/{uuid}/{attr}</td>
+   <td>
+    <ul>
+     <li>gets attribute (e.g. child variable, member function) of object represented by uuid
+     <li>stores the pointer server-side
+     <li>returns uuid representing the attribute
+    </ul>
+   </td>
+ </tr>
+  <tr>
+   <td>GET</td>
+   <td>/representation/{uuid}</td>
+   <td>
+    <ul>
+     <li>serializes the object represented by uuid
+     <li>returns the serialized data
+    </ul>
+   </td>
+ </tr>
+  <tr>
+   <td>DELETE</td>
+   <td>/representation/{uuid}</td>
+   <td>
+    <ul>
+     <li>deletes the object represented by uuid
+    </ul>
+   </td>
+  </tr>
+ </tbody>
+</table>
 
 (... to do ...)
 
