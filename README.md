@@ -520,7 +520,7 @@ The **bus** exposes server-side objects to the API and to one another. These obj
 
 ### Open API 3.0
 
-The API is defined by an OpenAPI 3.0 compliant description.
+The API is defined by an OpenAPI 3.0 compliant specification available at [https://github.com/federatedsecure/api](https://github.com/federatedsecure/api).
 
 For example, the PATCH endpoint reads:
 
