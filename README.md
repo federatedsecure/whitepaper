@@ -518,6 +518,36 @@ The **discovery mechanism** scans for available microservices at startup and exp
 
 The **bus** exposes server-side objects to the API and to one another. These objects may be microservices from the original registry, but also any number of classes and instances that are created, modified, and discarded during runtime.
 
+### Open API 3.0
+
+The API is defined by an OpenAPI 3.0 compliant description.
+
+For example, the PATCH endpoint reads:
+
+```yaml
+/representation/{representation_uuid}:
+    patch:
+      summary: call a server-side object
+      description: call a server-side object such as a static
+      function, a member function, or in case of a class, its
+      constructor
+      operationId: call_representation
+      parameters:
+        - in: path
+          name: representation_uuid
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        $ref: '#/components/requestBodies/ArgsKwargs'
+      responses:
+        '200':
+          $ref: '#/components/responses/ResponseOk'
+        'default':
+          $ref: '#/components/responses/ResponseError'
+```
+
 # Results
 
 (... to do ...)
