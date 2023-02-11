@@ -456,6 +456,8 @@ By using `Representation` the entire API traffic can be routed through very few 
 
 In these terms, it is easy to implement `api.create`, `api.download`, `api.call`, and `api.download` as used in the main routine and in  Representation above:
 
+#### Code Listing 4 – class Api (simplified, see actual code!)
+
 ```python
 class Api:
 
@@ -524,6 +526,8 @@ The API is defined by an OpenAPI 3.0 compliant specification available at [https
 
 For example, the PATCH endpoint reads:
 
+#### Code Listing 5 – Open API 3.0 definition (excerpt)
+
 ```yaml
 /representation/{representation_uuid}:
     patch:
@@ -547,6 +551,48 @@ For example, the PATCH endpoint reads:
         'default':
           $ref: '#/components/responses/ResponseError'
 ```
+
+### Representation of server-side objects
+
+At the minimum, the bus offers functionality to create representations of registered microservices, create representations of directly uploaded data, create representations of member variables and member functions of represented objects, call a represented function, download the content of a representation, and release a representation. 
+Let us have a visual look at the life cycle of server-side object representation:
+
+#### Figure 5
+![](images/serverside.png)
+
+At startup, microservices are discovered and announce themselves and their functionality to the registry.
+The client requests a microservice with certain abilities, and if a matching microservice is found in the registry, a pointer/handle is stored on the bus, and a UUID of that handle is returned to the client.
+
+In subsequent calls, the client refers to the microservice by that UUID. It may request attributes of that microservice. For example, if the microservice is represented by a class, that attribute may be a member function. Again, a pointer/handle to the attribute is stored on the bus, and another UUID is handed to the client. This process may repeat iteratively.
+
+If a handle represents a callable function, the client may call that function with additional arguments. Again, the result of the function call is not directly returned to the client, but stored on the bus, and yet another UUID is returned to the client. A minimal implementation of this functionality may be illustrated as follows:
+
+#### Code Listing 6 – server-side implementation of calls to server-side objects (simplified)
+
+```python
+def call_representation(self, representation_uuid, body):
+
+    args, kwargs = self.get_arguments(body)
+    pointer = self.lut_uuid_to_repr[representation_uuid]
+    result = pointer(*args, **kwargs)
+    
+    if result is None:
+        return None
+
+    uuid = str(uuid.uuid4())
+    self.lut_uuid_to_repr[uuid] = result
+    return uuid
+```
+
+At some point, the result of the computation is reached. In this case, the client would like to download the result itself instead of a mere representation. The server serializes the result and returns it as a normal response body.
+
+-	**Security consideration: the client should not be able to access any data on the server.** This can be solved by restricting the download functionality to certain objects labeled as output. Proper object-level authorization is thus required in production settings.
+
+Finally, the client may release any representation that it does not need any more. If those representations point to temporarily stored objects, those objects may be deleted. If the representation is of a static microservice or the like, only the representation on the bus is discarded.
+
+-	**Best practice:** The client should send appropriate delete requests to the server whenever client-side representations are discarded or going out of scope. This prevents a buildup of obsolete representations on the bus and memory leakage on the server. As the server cannot control graceful termination of client-side scripts, additional garbage collection mechanisms may be a good idea. For example, automatic removal of unused representations after a certain grace period.
+
+- **Best practice:** The server may keep look-up-tables for the representation of commonly used objects instead of issuing new UUIDs every time.
 
 # Results
 
