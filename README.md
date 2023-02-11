@@ -622,6 +622,8 @@ There is no particular programming language required for the implementation of a
 
 The overwhelming share of computational cost is incurred server-side. In the following benchmark, two respectively three servers and two respectively three clients are simultaneously running on the same localhost machine.
 
+#### Table 4a – speed benchmarks depending on server hardware (seconds)
+
 <table>
  <thead>
   <tr>
@@ -666,6 +668,8 @@ Perhaps most impressively, the Raspberry Zero, a device priced at five US Dollar
 Most secure multiparty computation protocols engage in multiple rounds of communication between the servers, and SIMON (SImple Multiparty computatiON) is no exception. Consequently, the network overhead is expected to have a significant influence on computing time.
 
 The following benchmark connects two servers through different means with varying network latency. The baseline is the workstation as above hosting both servers. The internal latency is way below 1 millisecond and essentially zero. In the second case, the workstation as above and the laptop as above are connected by ethernet cables respectively WLAN through a router with 2 milliseconds latency. In the third case, another fast server is connected to the workstation over public internet with 28 milliseconds of latency:
+
+#### Table 4b – speed benchmarks depending on server-server connectivity (seconds)
 
 <table>
  <thead>
