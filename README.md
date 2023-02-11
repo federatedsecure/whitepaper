@@ -558,6 +558,7 @@ At the minimum, the bus offers functionality to create representations of regist
 Let us have a visual look at the life cycle of server-side object representation:
 
 #### Figure 5
+
 ![](images/serverside.png)
 
 At startup, microservices are discovered and announce themselves and their functionality to the registry.
@@ -749,5 +750,9 @@ In the baseline, the clients are run on the same physical machine as above. In t
 </table>
 
 Clients connected through localhost and LAN/WLAN client were about as fast, but connections over the mobile network were slower by an order of magnitude due to increased round trip delays.
+
+#### Figure 6 - Scripting and running a client on an Android smartphone
+
+![](images/figure6a.png) ![](images/figure6b.png)
 
 (... to do ...)
