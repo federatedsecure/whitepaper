@@ -594,6 +594,15 @@ Finally, the client may release any representation that it does not need any mor
 
 - **Best practice:** The server may keep look-up-tables for the representation of commonly used objects instead of issuing new UUIDs every time.
 
+### Microservices
+
+The architecture is not opinionated on what kind of microservices might be hosted. In the context of Privacy-Preserving Computation (PPC), at least the following types of microservices will most probably be implemented:
+
+-	**(required)** One or more PPC protocols. These microservices will at the minimum provide functionality to build peer-to-peer networks with other servers, accept input data and generate cryptographic shares, and execute the PPC protocol. They may interact with their peers through the bus and the API or through their own third-party networks.
+
+-	**(optional)** Some basic microservices for synchronization, e.g. to broadcast public parameters of calculations to other nodes, or to control the joint flow of computation through semaphores and other signals.
+
+
 # Results
 
 ## Implementation
