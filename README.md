@@ -586,7 +586,7 @@ def call_representation(self, representation_uuid, body):
 
 At some point, the result of the computation is reached. In this case, the client would like to download the result itself instead of a mere representation. The server serializes the result and returns it as a normal response body.
 
--	**Security consideration: the client should not be able to access any data on the server.** This can be solved by restricting the download functionality to certain objects labeled as output. Proper object-level authorization is thus required in production settings.
+-	**Security consideration:** the client should not be able to access any data on the server. This can be solved by restricting the download functionality to certain objects labeled as output. Proper object-level authorization is thus required in production settings.
 
 Finally, the client may release any representation that it does not need any more. If those representations point to temporarily stored objects, those objects may be deleted. If the representation is of a static microservice or the like, only the representation on the bus is discarded.
 
@@ -602,6 +602,11 @@ The architecture is not opinionated on what kind of microservices might be hoste
 
 -	**(optional)** Some basic microservices for synchronization, e.g. to broadcast public parameters of calculations to other nodes, or to control the joint flow of computation through semaphores and other signals.
 
+### Webserver and API
+
+The server will expose the public functionality of the bus to the client through an API. A regular webserver will be needed.
+
+-	**Security consideration:** In a production setting, all the usual best practices of securing a webserver and API should be followed. In particular, user authentication and proper object-level authorization.
 
 # Results
 
