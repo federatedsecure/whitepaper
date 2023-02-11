@@ -608,6 +608,10 @@ The server will expose the public functionality of the bus to the client through
 
 -	**Security consideration:** In a production setting, all the usual best practices of securing a webserver and API should be followed. In particular, user authentication and proper object-level authorization.
 
+### Programming language
+
+There is no particular programming language required for the implementation of a Federated Secure Computing server. The propaedeutic reference implementation (see below) is in Python, though.
+
 # Results
 
 ## Implementation
