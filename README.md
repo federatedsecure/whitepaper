@@ -706,4 +706,48 @@ The following benchmark connects two servers through different means with varyin
 
 In the WLAN setting, networking overhead about doubles overall computing time, In the internet setting, networking overhead increases computing time about fivefold. Hence, in practical settings, putting servers of the different parties close to each other, e.g. in the same physical data center, or host them on a common cloud infrastructure, will be beneficial.
 
+## Impact of client-server connectivity
+
+In the final benchmark on speed, the servers are run on the same machine as before, but the clients connect through different means.
+
+In the baseline, the clients are run on the same physical machine as above. In the second case, the clients are run on a separate laptop, connected by LAN/WLAN to the workstation as before. In the third setting, the clients are run on smartphones, dialing up to the workstation through public mobile internet services:
+
+#### Table 4c – speed benchmarks depending on client-server connectivity (seconds)
+
+<table>
+ <thead>
+  <tr>
+   <td>task</td>
+   <td>localhost <sup>1</sup><br>(&lt;1 ms ping)</td>
+   <td>LAN/WLAN <sup>2</sup><br>(2 ms ping)</td>
+   <td>internet <sup>3</sup><br>(28 ms ping)</td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr><td colspan="4"><strong>horizontally partitioned data (without record linkage)</strong></td></tr>
+  <tr><td>floating point additions <sup>4</sup></td><td>0.10 &#177; 0.01</td><td>0.15 &#177; 0.01</td><td>1.07 &#177; 0.21</td></tr>
+  <tr><td>matrix multiplications <sup>6</sup></td><td>0.26 &#177; 0.02</td><td>0.32 &#177; 0.02</td><td>1.30 &#177; 0.37</td></tr>
+  <tr><td>histograms <sup>5</sup></td><td>0.25 &#177; 0.04</td><td>0.33 &#177; 0.07</td><td>2.90 &#177; 0.59</td></tr>
+  <tr><td>contingency tables <sup>5</sup></td><td>0.38 &#177; 0.07</td><td>0.49 &#177; 0.10</td><td>4.59 &#177; 0.97</td></tr>
+  <tr><td>univariate statistics <sup>5</sup></td><td>0.64 &#177; 0.05</td><td>69 &#177; 0.05</td><td>8.55 &#177; 1.71</td></tr>
+  <tr><td>bivariate statistics <sup>5</sup></td><td>1.93 &#177; 0.05</td><td>2.00 &#177; 0.04</td><td>26.0 &#177; 3.34</td></tr>
+  <tr><td>set intersections <sup>5</sup></td><td>0.57 &#177; 0.06</td><td>0.59 &#177; 0.08</td><td>1.91 &#177; 0.17</td></tr>
+  <tr><td>set intersection size <sup>5</sup></td><td>0.48 &#177; 0.08</td><td>0.51 &#177; 0.14</td><td>1.62 &#177; 0.20</td></tr>
+  <tr><td colspan="4"><strong>vertically partitioned data (with record linkage)</strong></td></tr>
+  <tr><td>contingency tables <sup>5</sup></td><td>1.33 &#177; 0.16</td><td>1.54 &#177; 0.09</td><td>4.91 &#177; 0.91</td></tr>
+  <tr><td>OLS regression <sup>6</sup></td><td>0.86 &#177; 0.01</td><td>0.15 &#177; 0.02</td><td>1.74 &#177; 0.28</td></tr>
+ </tbody>
+ <tfoot>
+  <tr><td colspan="4"><sup>1</sup> servers and clients are running in separate CPU cores on same machine</td></tr>
+  <tr><td colspan="4"><sup>2</sup> clients on laptop connected through Intel Dualband-Wireless-AC 8260</td></tr>
+  <tr><td colspan="4"><sup>3</sup> clients on three separate mobile phones (2x Samsung SM-G52F/DS “XCover 5”)<br>connecting through 4G network of Telefónica S.A. in Germany
+</td></tr>
+  <tr><td colspan="4"><sup>4</sup> M=3 parties, N=100 data samples each</td></tr>
+  <tr><td colspan="4"><sup>5</sup> M=2 parties, N=100 data samples each</td></tr>
+  <tr><td colspan="4"><sup>6</sup> M=2 parties, N=100 elements in 10x10 matrix</td></tr>
+ </tfoot>
+</table>
+
+Clients connected through localhost and LAN/WLAN client were about as fast, but connections over the mobile network were slower by an order of magnitude due to increased round trip delays.
+
 (... to do ...)
