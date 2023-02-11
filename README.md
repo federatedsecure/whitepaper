@@ -755,4 +755,38 @@ Clients connected through localhost and LAN/WLAN client were about as fast, but 
 
 ![](images/figure6a.png) ![](images/figure6b.png)
 
-(... to do ...)
+## Code size benchmarks
+
+Both the client-side API wrapper and the server-side middleware stub are small:
+
+#### Table 5a – size of client-side API wrapper
+
+<table>
+ <thead>
+  <tr>
+   <td>language</td>
+   <td>without HTTP interface</td>
+   <td>with HTTP interface</td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr><td>Python</td><td>2.8 kilobyte</td><td>7.4 kilobyte</td></tr>
+  <tr><td>R</td><td>2.1 kilobyte</td><td>6.6 kilobyte</td></tr>
+  <tr><td>Javascript</td><td>2.1 kilobyte</td><td>3.4 kilobyte</td></tr>
+ </tbody>
+</table>
+
+#### Table 6a – size of client-side API wrapper
+
+<table>
+ <thead>
+  <tr>
+   <td>language</td>
+   <td>without webserver</td>
+   <td>with webserver</td>
+  </tr>
+ </thead>
+ <tbody>
+   <td>Python</td><td>12.4 kilobyte</td><td>31.6 kilobyte</td>
+ </tbody>
+</table>
