@@ -65,7 +65,7 @@ The complete IP and all assets were have been transferred by bytes for life to L
 
 Presently, PPC still has several barriers to entry. Some are one the business side (lacking financial incentives, unproven business models) ore purely historical (lack of visible role models and successful show cases). These are out of the scope. However, many barriers are related to rather technical pain points that render development, deployment, and operation of PPC solutions cumbersome and difficult. These can and should be addressed by the architecture.
 
-The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns:
+The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns, see Table 1.
 
 #### Table 1 – pain points and derived design goals
 
@@ -158,7 +158,8 @@ The first point is conveniently solved by a client/server architecture. Providin
 However, if clients are to be entirely free of any cryptography concerns, they cannot send cryptographic shares to the server, but need to be able to send raw data in the clear. This is also true because the client should be agnostic to which particular PPC protocol is run by the server, as different protocols require quite different generation of shares.
 
 Favoring minimalistic lean clients and simplicity of the client-side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
-The resulting and remaining decisions are:
+
+The resulting and remaining decisions are listed in Table 2.
 
 #### Table 2 – design decisions and their rationale
 
@@ -393,7 +394,9 @@ print(api$download(result))
 
 ### API Wrapper
 
-By using `Representation` the entire API traffic can be routed through very few RESTful endpoints:
+By using `Representation` the entire API traffic can be routed through very few RESTful endpoints, see Table 3.
+
+#### Table 3 – API endpoints
 
 <table>
  <thead>
