@@ -4,6 +4,7 @@ Federated Secure Computing: Technical Whitepaper
 Authors:
 Ballhausen, H (LMU Munich)
 
+
 # Abstract
 
 ## Background and Motivation
@@ -31,6 +32,32 @@ The server-side implementation is 100% Python with no tech stack needed beyond a
 ## Conclusion
 
 Federated Secure Computing is a free and open-source software (FOSS) initiative funded by Stifterverband and championed by LMU Munich. The architecture aims to render PPC more accessible and inclusive, as a first steppingstone to build privacy-friendly applications. We hope this whitepaper enables anyone to join the FSC ecosystem, and we are welcoming contributions.
+
+
+# Background
+
+This technical white paper describes Federated Secure Computing (FSC). The open source project is hosted by LMU Munich and financed by Stifterverband. A more complete exposition of Privacy preserving computation (PPC)  is out of the scope of this whitepaper. For an overview of related technologies see (UN Global Working Group on Big Data, 2019).
+
+## Pilot experiment (2019)
+In 2019, we conducted a field experiment between LMU Munich, TU Munich, and Charité Berlin. In a world first, real patient data from both LMU and Charité was analyzed through a secure SMPC protocol. (Krüger-Brand, 2019; von Maltitz, et al., 2021)
+
+The cryptography had been developed by a specialist security researcher from TUM based on the FRESCO/SPDZ framework. Dedicated hardware servers were set up at both LMU and Charité, services by two system administrators. Data was collected by researchers at LMU and Charité. This all took a few months in preparation and execution. The script executed in 20 minutes. The experiment was successful, but the process was tedious.
+
+## Searching for alternatives (2020)
+Afterwards, we spoke with prospective users and developers. We contacted companies and government agencies. The result was unanimous: On the one hand, they were very interested in making their data available for secure analysis. In particular, the ability to do joint calculations without the need for data sharing or a trusted third party seemed very attractive in many use case scenarios. On the other hand, they were very reluctant to use a technology that was poorly understood by their developers and data security officers. On closer inspection, exotic tech stacks and missing skills were almost always a showstopper.
+
+Simultaneously, a market scan revealed that there were attractive and powerful PPC frameworks already available, both open source and proprietary. In fact, most of the explored potential use cases would require only the most basic algorithms, that had been well described in the literature. Thus, it became clear that “the technology was already there”. What was really required was rather a simple middleware that would disentangle the cryptography layer from the business logic.
+
+## Stifterverband competition (2021)
+
+bytes for life, a Munich based cloud computing startup, took up the task to draft an architecture and develop a reference implementation. To gain traction, LMU Hospital joined “Wirkung hoch 100”, a national competition by Stifterverband with the declared aim to improve the German education, science, and innovation ecosystem. Over a year, the team refined their solution to create the most impact. During the process, Federated Secure Computing was made free and open source.
+
+In November 2021, Stifterverband awarded their Innovation Prize to Federated Secure Computing and awarded three years of funding to furter develop the open source project.
+
+## Project phase (2022+)	
+
+The complete IP and all assets were have been transferred by bytes for life to LMU Munich. LMU Munich is now hosting the project and championing its scientific and economic development.
+
 
 # Architecture
 
