@@ -686,6 +686,30 @@ The following namespaces are used or are reserved for future use, see Table 4.
 
 The following packages are available, see Table 5.
 
+#### Table 5 - Packages
+
+<table>
+ <thead>
+  <tr>
+   <td><strong>repository</strong></td>
+   <td><strong>packages</strong></td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><strong>PyPI</strong></td>
+   <td>
+    <ul>
+     <li>federatedsecure-client</li>
+     <li>federatedsecure-server</li>
+     <li>federatedsecure-simon</li>
+    </ul>
+   </td>
+  </tr>
+ </tbody>
+</table>
+
+
 ### Repository structure
 
 At the time of writing, the following repositories are public on GitHub, see Table 6.
