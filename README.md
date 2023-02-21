@@ -59,7 +59,7 @@ In November 2021, Stifterverband awarded their Innovation Prize to Federated Sec
 The complete IP and all assets were have been transferred by bytes for life to LMU Munich. LMU Munich is now hosting the project and championing its scientific and economic development.
 
 
-# Architecture
+# Methods
 
 ## Pain Points and Design Goals
 
