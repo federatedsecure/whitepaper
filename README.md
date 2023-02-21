@@ -643,7 +643,27 @@ There is no particular programming language required for the implementation of a
 
 ## Implementation
 
-(... to do ...)
+### Namespaces
+
+The following namespaces are used or are reserved for future use, see Table 4.
+
+### Packages
+
+The following packages are available, see Table 5.
+
+### Repository structure
+
+At the time of writing, the following repositories are public on GitHub, see Table 6.
+
+### Correspondence
+
+Namespaces, PyPI packages, and repositories relate as follows, see Table 7.
+
+### Code availability and licensing
+
+The software is available as free and open source at https://github.com/federatedsecure
+
+All public repositories under this GitHub organization come with the MIT license.
 
 ## Benchmarks
 
