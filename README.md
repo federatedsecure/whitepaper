@@ -639,13 +639,15 @@ The server will expose the public functionality of the bus to the client through
 
 There is no particular programming language required for the implementation of a Federated Secure Computing server. The propaedeutic reference implementation (see below) is in Python, though.
 
-# Implementation
+# Results
+
+## Implementation
 
 (... to do ...)
 
-# Benchmarks
+## Benchmarks
 
-## Impact of server hardware
+### Impact of server hardware
 
 The overwhelming share of computational cost is incurred server-side. In the following benchmark, two respectively three servers and two respectively three clients are simultaneously running on the same localhost machine.
 
@@ -690,7 +692,7 @@ The laptop took about two to three times as long. This reflects the lower CPU an
 
 Perhaps most impressively, the Raspberry Zero, a device priced at five US Dollars, is sufficient to run three Federated Secure Computing servers and clients in parallel. The BCM2835 based system-on-a-chip is an order of magnitude slower than the larger machines, but still might be useful in propaedeutic or internet-of-things applications.
 
-## Impact of server-server connectivity
+### Impact of server-server connectivity
 
 Most secure multiparty computation protocols engage in multiple rounds of communication between the servers, and SIMON (SImple Multiparty computatiON) is no exception. Consequently, the network overhead is expected to have a significant influence on computing time.
 
@@ -733,7 +735,7 @@ The following benchmark connects two servers through different means with varyin
 
 In the WLAN setting, networking overhead about doubles overall computing time, In the internet setting, networking overhead increases computing time about fivefold. Hence, in practical settings, putting servers of the different parties close to each other, e.g. in the same physical data center, or host them on a common cloud infrastructure, will be beneficial.
 
-## Impact of client-server connectivity
+### Impact of client-server connectivity
 
 In the final benchmark on speed, the servers are run on the same machine as before, but the clients connect through different means.
 
@@ -781,7 +783,7 @@ Clients connected through localhost and LAN/WLAN client were about as fast, but 
 
 ![](images/figure6a.png) ![](images/figure6b.png)
 
-## Code size benchmarks
+### Code size benchmarks
 
 Both the client-side API wrapper and the server-side middleware stub are small:
 
