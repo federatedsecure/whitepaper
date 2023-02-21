@@ -647,6 +647,41 @@ There is no particular programming language required for the implementation of a
 
 The following namespaces are used or are reserved for future use, see Table 4.
 
+#### Table 4 - Namespaces
+
+<table>
+ <thead>
+  <tr>
+   <td><strong>language</strong></td>
+   <td><strong>namespace structure</strong></td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td><strong>Python</strong></td>
+   <td>
+    <ul>
+     <li><strong>federatedsecure</strong></li>
+     <li>federatedsecure.<strong>client</strong></li>
+     <li>federatedsecure.<strong>server</strong></li>
+     <li>federatedsecure.<strong>services</strong></li>
+     <li>federatedsecure.services.<strong>&#60;name&#62;.*</strong> (see below)</li>
+     <li>federatedsecure.services.<strong>&#60;category&#62;.&#60;name&#62;.*</strong> (see below)</li>
+    </ul>
+   </td>
+  </tr>
+  <tr>
+   <td><strong>Java</strong></td>
+   <td>
+    <ul>
+     <li><strong>com.federatedsecure.*</strong></li>
+    </ul>
+   </td>
+  </tr>
+ </tbody>
+</table>
+
+
 ### Packages
 
 The following packages are available, see Table 5.
