@@ -717,7 +717,7 @@ pip.main([‘install’, ‘federatedsecure-client’])
 
 The overwhelming share of computational cost is incurred server-side. In the following benchmark, two respectively three servers and two respectively three clients are simultaneously running on the same localhost machine.
 
-#### Table 4a – speed benchmarks depending on server hardware (seconds)
+#### Table 8 – speed benchmarks depending on server hardware (seconds)
 
 <table>
  <thead>
@@ -764,7 +764,7 @@ Most secure multiparty computation protocols engage in multiple rounds of commun
 
 The following benchmark connects two servers through different means with varying network latency. The baseline is the workstation as above hosting both servers. The internal latency is way below 1 millisecond and essentially zero. In the second case, the workstation as above and the laptop as above are connected by ethernet cables respectively WLAN through a router with 2 milliseconds latency. In the third case, another fast server is connected to the workstation over public internet with 28 milliseconds of latency:
 
-#### Table 4b – speed benchmarks depending on server-server connectivity (seconds)
+#### Table 9 – speed benchmarks depending on server-server connectivity (seconds)
 
 <table>
  <thead>
@@ -807,7 +807,7 @@ In the final benchmark on speed, the servers are run on the same machine as befo
 
 In the baseline, the clients are run on the same physical machine as above. In the second case, the clients are run on a separate laptop, connected by LAN/WLAN to the workstation as before. In the third setting, the clients are run on smartphones, dialing up to the workstation through public mobile internet services:
 
-#### Table 4c – speed benchmarks depending on client-server connectivity (seconds)
+#### Table 10 – speed benchmarks depending on client-server connectivity (seconds)
 
 <table>
  <thead>
@@ -853,7 +853,7 @@ Clients connected through localhost and LAN/WLAN client were about as fast, but 
 
 Both the client-side API wrapper and the server-side middleware stub are small:
 
-#### Table 5a – size of client-side API wrapper
+#### Table 11 – size of client-side API wrapper
 
 <table>
  <thead>
@@ -870,7 +870,7 @@ Both the client-side API wrapper and the server-side middleware stub are small:
  </tbody>
 </table>
 
-#### Table 6a – size of client-side API wrapper
+#### Table 12 – size of client-side API wrapper
 
 <table>
  <thead>
