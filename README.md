@@ -714,13 +714,12 @@ The following packages are available, see Table 5.
 
 At the time of writing, the following repositories are public on GitHub, see Table 6.
 
-
 #### Table 6 - GitHub repository structure and contents
 
 <table>
  <thead>
   <tr>
-   <td><strong>repository</strong></td>
+   <td><strong>GitHub repository</strong></td>
    <td><strong>contents</strong></td>
   </tr>
  </thead>
@@ -803,9 +802,45 @@ At the time of writing, the following repositories are public on GitHub, see Tab
  </tbody>
 </table>
 
+
 ### Correspondence
 
 Namespaces, PyPI packages, and repositories relate as follows, see Table 7.
+
+#### Table 7 - relation between namespaces, packages, and GitHub repositories
+
+<table>
+ <thead>
+  <tr>
+   <td><strong>Python namespace</strong></td>
+   <td><strong>PyPI package</strong></td>
+   <td><strong>GitHub repository</strong></td>
+  </tr>
+ </thead>
+ <tbody>
+  <tr>
+   <td>federatedsecure.client</td>
+   <td>federatedsecure-client</td>
+   <td>client-python</td>
+  </tr>
+  <tr>
+   <td>federatedsecure.server</td>
+   <td>federatedsecure-server</td>
+   <td>server</td>
+  </tr>
+  <tr>
+   <td>federatedsecure.services.&#60;name&#62;</td>
+   <td>federatedsecure-&#60;name&#62;</td>
+   <td>service-&#60;name&#62;</td>
+  </tr>
+  <tr>
+   <td>federatedsecure.services.&#60;category&#62;.&#60;name&#62;</td>
+   <td>federatedsecure-&#60;category&#62;-&#60;name&#62;</td>
+   <td>utility-&#60;category&#62;-&#60;name&#62;</td>
+  </tr>
+ </tbody>
+</table>
+
 
 ### Code availability and licensing
 
