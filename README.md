@@ -26,11 +26,11 @@ Control flow happens through microservices provided by an Open API 3.0 interface
 
 A free and open-source implementation is provided at github.com/federatedsecure
 
-The server-side implementation is 100% Python with no tech stack needed beyond a standard webserver such as Connexion or Django (both are provided as stubs). The client-side implementation is just a thin API wrapper, available in several programming languages. A simple multiparty computation (“Simon”) protocol is provided as propaedeutic example of a cryptographic backend. 
+The server-side implementation is 100% Python with no tech stack needed beyond a standard webserver such as Connexion or Django (both are provided as stubs). The client-side implementation is just a thin API wrapper, available in several programming languages. A simple multiparty computation ("Simon") protocol is provided as propaedeutic example of a cryptographic backend.
 
 ## Conclusion
 
-Federated Secure Computing is a free and open-source software (FOSS) initiative funded by Stifterverband and maintained by LMU Munich. The architecture aims to render PPC more accessible and inclusive, as a first steppingstone to build privacy-friendly applications. We hope this whitepaper enables anyone to join the ecosystem, and we are welcoming contributions.
+Federated Secure Computing is a free and open-source software (FOSS) initiative funded by Stifterverband and championed by LMU Munich. The architecture aims to render PPC more accessible and inclusive, as a first steppingstone to build privacy-friendly applications. We hope this whitepaper enables anyone to join the FSC ecosystem, and we are welcoming contributions.
 
 # Architecture
 
