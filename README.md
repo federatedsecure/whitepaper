@@ -1053,7 +1053,7 @@ Both the client-side API wrapper and the server-side middleware stub are small:
  </tbody>
 </table>
 
-#### Table 12 – size of client-side API wrapper
+#### Table 12 – size of server-side API wrapper
 
 <table>
  <thead>
