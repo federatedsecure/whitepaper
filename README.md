@@ -143,6 +143,8 @@ The following pain points are recurring topics in the literature, have been enco
  </tbody>
 </table>
 
+## 2.2. Resulting Architecture
+
 At its highest level, the architecture is dictated by a twofold separation: Business logic needs to be disentangled from cryptography protocols (separation of concerns, dependency inversion). And data flows of different data owners need to be separated from one another until they hit the underlying cryptography layer (privacy).
 
 The first point is conveniently solved by a client/server architecture. Providing server-side PPC protocols through microservices and a web API to the client-side business logic addresses several of the above design goals.
@@ -229,6 +231,7 @@ The resulting design decisions are listed in Table 2.
   </tr>
  </tbody>
 </table>
+
 
 ## Client-Server Topologies
 
