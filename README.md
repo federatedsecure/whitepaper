@@ -1,8 +1,9 @@
 Federated Secure Computing: Technical Whitepaper
 ================================================
 
-Authors:
-Ballhausen, H (LMU Munich)
+(C) 2023 by the authors. Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the [Creative Commons Attribution (CC BY) license](https://creativecommons.org/licenses/by/4.0/). Please cite as:
+
+    Ballhausen H, Hinske LC. Federated Secure Computing. Informatics. 2023; 10(4):83. https://doi.org/10.3390/informatics10040083
 
 
 # Abstract
