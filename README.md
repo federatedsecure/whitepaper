@@ -56,7 +56,7 @@ Presently, PPC still has several barriers to entry. Some are on the business sid
 In this work, we present an architecture that alleviates several of the perceived “pain points” and provides a simple yet effective framework to employ different PPC technologies. The goal is to separate the complexity of cryptographic protocols from business logic concerns. The minimalistic solution should be useable by small teams without a background in cryptography. Multiple topologies between data owners, processing nodes, and data consumers should be feasible. Developers should not be forced to use any particular language or libraries. Data flow should be transparent and straightforward to secure. Finally, the solution should be lightweight enough to work in IoT settings and scale to potentially large networks.
 
 
-# Methods
+# 2. Methods
 
 ## Pain Points and Design Goals
 
