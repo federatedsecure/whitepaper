@@ -5,6 +5,16 @@ Federated Secure Computing
 
     Ballhausen H, Hinske LC. Federated Secure Computing. Informatics. 2023; 10(4):83. https://doi.org/10.3390/informatics10040083
 
+by Hendrik Ballhausen (1,*) and Ludwig Christian Hinske (2,3)
+
+(1) Medical Faculty, Ludwig-Maximilians-Universität München, Geschwister-Scholl-Platz 1, 80539 Munich, Germany
+
+(2) Institute for Digital Medicine, University Hospital Augsburg, Stenglinstrasse 2, 86156 Augsburg, Germany
+
+(3) Department of Anaesthesiology, LMU University Hospital, LMU Munich, Marchioninistrasse 15, 81377 Munich, Germany
+
+(*) Author to whom correspondence should be addressed. 
+
 
 # Abstract
 
