@@ -916,13 +916,15 @@ import pip
 pip.main([‘install’, ‘federatedsecure-client’])
 ```
 
-## Benchmarks
+## 3.3. Benchmarks
 
-### Impact of server hardware
+The following benchmarks give an indication of the performance one may expect from a secure multiparty computation (SMPC) backend with task-specific microservices. Here, we are using the propaedeutic Python package “Simon” (SImple Multiparty computatiON). Monolithic universal SMPC solutions like garbled circuits would generally be slower. Optimized implementations in a compiled language would be faster. Methods other than SMPC (e.g., fully homomorphic encryption or trusted computing like DataSHIELD) might have different performance characteristics altogether. The performance of various methods and algorithms has been studied extensively in the literature. The following is rather to be understood as evidence that basic calculations of average-size problems may easily be performed with little overhead by the presented middleware.
 
-The overwhelming share of computational cost is incurred server-side. In the following benchmark, two respectively three servers and two respectively three clients are simultaneously running on the same localhost machine.
+### 3.3.1. Impact of Server Hardware
 
-#### Table 8 – speed benchmarks depending on server hardware (seconds)
+The overwhelming share of computational cost is incurred on the server side. In the following benchmark, two or three servers and two or three clients, respectively, are simultaneously running on the same local host machine, Table 8.
+
+#### Table 8. Speed benchmarks depending on server hardware (seconds). 
 
 <table>
  <thead>
@@ -957,19 +959,17 @@ The overwhelming share of computational cost is incurred server-side. In the fol
  </tfoot>
 </table>
 
-The workstation was able to handle the tasks in about a second on average.
+The workstation was able to handle the tasks in about a second on average. The laptop took about two to three times as long. This reflects the lower CPU and RAM clocks and the fact that it was in energy conservation mode and simultaneously loaded with typical office tasks.
 
-The laptop took about two to three times as long. This reflects the lower CPU and RAM clocks, and the fact that it was in energy conservation mode and simultaneously loaded with typical office tasks.
+Perhaps most impressively, the Raspberry Zero, a device priced at five USD, is sufficient to run three Federated Secure Computing servers and clients in parallel. The BCM2835-based system-on-a-chip is an order of magnitude slower than the larger machines but still might be useful in propaedeutic or internet of things applications.
 
-Perhaps most impressively, the Raspberry Zero, a device priced at five US Dollars, is sufficient to run three Federated Secure Computing servers and clients in parallel. The BCM2835 based system-on-a-chip is an order of magnitude slower than the larger machines, but still might be useful in propaedeutic or internet-of-things applications.
+### 3.3.2. Impact of Server–Server Connectivity
 
-### Impact of server-server connectivity
+Most secure multiparty computation protocols engage in multiple rounds of communication between the servers. Consequently, the network overhead is expected to have a significant influence on computing time.
 
-Most secure multiparty computation protocols engage in multiple rounds of communication between the servers, and SIMON (SImple Multiparty computatiON) is no exception. Consequently, the network overhead is expected to have a significant influence on computing time.
+The following benchmark connects two servers through different means with varying network latency. The baseline is the workstation, as above, hosting both servers. The internal latency is way below 1 millisecond and essentially zero. In the second case, the workstation, as above, and the laptop, as above, are connected by ethernet cables, respectively, WLAN through a router with 2 milliseconds latency. In the third case, another fast server is connected to the workstation over public internet with 28 milliseconds of latency. See Table 9.
 
-The following benchmark connects two servers through different means with varying network latency. The baseline is the workstation as above hosting both servers. The internal latency is way below 1 millisecond and essentially zero. In the second case, the workstation as above and the laptop as above are connected by ethernet cables respectively WLAN through a router with 2 milliseconds latency. In the third case, another fast server is connected to the workstation over public internet with 28 milliseconds of latency:
-
-#### Table 9 – speed benchmarks depending on server-server connectivity (seconds)
+#### Table 9. Speed benchmarks depending on server connectivity (seconds). 
 
 <table>
  <thead>
@@ -1004,15 +1004,15 @@ The following benchmark connects two servers through different means with varyin
  </tfoot>
 </table>
 
-In the WLAN setting, networking overhead about doubles overall computing time, In the internet setting, networking overhead increases computing time about fivefold. Hence, in practical settings, putting servers of the different parties close to each other, e.g. in the same physical data center, or host them on a common cloud infrastructure, will be beneficial.
+In the WLAN setting, networking overhead roughly doubles overall computing time. In the internet setting, networking overhead increases computing time about fivefold. Hence, in practical settings, putting servers of the different parties close to each other, e.g., in the same physical data center or hosting them on a common cloud infrastructure, will be beneficial.
 
-### Impact of client-server connectivity
+### 3.3.3. Impact of Client–Server Connectivity
 
 In the final benchmark on speed, the servers are run on the same machine as before, but the clients connect through different means.
 
-In the baseline, the clients are run on the same physical machine as above. In the second case, the clients are run on a separate laptop, connected by LAN/WLAN to the workstation as before. In the third setting, the clients are run on smartphones, dialing up to the workstation through public mobile internet services:
+In the baseline, the clients are run on the same physical machine as above. In the second case, the clients are run on a separate laptop, connected by LAN/WLAN to the workstation as before. In the third setting, the clients are run on smartphones, dialing up to the workstation through public mobile internet services. Clients connected through localhost and LAN/WLAN client were about as fast, but connections over the mobile network were slower by an order of magnitude due to increased round-trip delays, Table 10.
 
-#### Table 10 – speed benchmarks depending on client-server connectivity (seconds)
+#### Table 10. Speed benchmarks depending on client–server connectivity (seconds). 
 
 <table>
  <thead>
@@ -1048,17 +1048,11 @@ In the baseline, the clients are run on the same physical machine as above. In t
  </tfoot>
 </table>
 
-Clients connected through localhost and LAN/WLAN client were about as fast, but connections over the mobile network were slower by an order of magnitude due to increased round trip delays.
+### 3.3.4. Code Size Benchmarks
 
-#### Figure 6 - Scripting and running a client on an Android smartphone
+Both the client-side API wrapper and the server-side middleware stub are small, Table 11 and Table 12.
 
-![](images/figure6a.png) ![](images/figure6b.png)
-
-### Code size benchmarks
-
-Both the client-side API wrapper and the server-side middleware stub are small:
-
-#### Table 11 – size of client-side API wrapper
+#### Table 11. Size of client-side API wrapper. 
 
 <table>
  <thead>
@@ -1075,7 +1069,7 @@ Both the client-side API wrapper and the server-side middleware stub are small:
  </tbody>
 </table>
 
-#### Table 12 – size of server-side API wrapper
+#### Table 12. Size of server-side API wrapper. 
 
 <table>
  <thead>
@@ -1089,3 +1083,21 @@ Both the client-side API wrapper and the server-side middleware stub are small:
    <td>Python</td><td>12.4 kilobyte</td><td>31.6 kilobyte</td>
  </tbody>
 </table>
+
+### 3.3.5. Setup in IoT Environments
+
+Installation on Raspberry Pi and Raspberry Pi Zero was straightforward, as there are regular and dedicated Linux distributions available. We tested with Ubuntu LTS 20.04 on Raspberry Pi 4 Model B and with Raspberry Pi OS on Raspberry Pi Zero. Both distributions come with an apt package manager, and one may simply install Python and pip as usual.
+
+Installation on Android smartphones requires a minimal workaround, as apt and pip are usually not available. We used QPython3, which comes as free and open source software and can be installed from an Android package (APK) downloaded from GitHub. Alternatively, the software is available from the usual app stores. Instead of pip on the command line, one then has to import pip as a Python module and use it to install the required packages, e.g.,
+
+```
+import pip
+pip.main([‘install’, ‘federatedsecure-client’])
+```
+
+After this process, which takes about five minutes, one can develop Federates Secure Computing apps on Android quite nicely (see Figure 8). In a production setting, one would probably prefer to develop on a workstation (e.g., via USB) and ship the packaged app. For propaedeutic settings, the ability to develop on smartphones is quite nice, though.
+
+#### Figure 8. Scripting and running a client on an Android smartphone. 
+
+![](images/figure6a.png) ![](images/figure6b.png)
+
