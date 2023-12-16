@@ -870,11 +870,11 @@ The software is available, free, and open source at https://github.com/federated
 
 All public repositories under this GitHub organization come with the MIT license.
 
-## Installation
+## 3.2. Installation
 
-### Server-side Installation
+### 3.2.1. Server-Side Installation
 
-First, install a web server to host the API. Flask plus Connexion is a puristic option with minimal overhead. Django is a more complete alternative. Both are provided as premade stubs.
+First, install a webserver to host the API. Flask plus Connexion is a puristic option with minimal overhead. Django is a more complete alternative. Both are provided as premade stubs.
 
 ```
 git clone https://github.com/federatedsecure/webserver-connexion
@@ -882,7 +882,7 @@ cd webserver-connexion
 pip install -r requirements.txt
 ```
 
-Next, install the code server middleware and any additional protocols you might want to use, e.g.:
+Next, install the code server middleware and any additional protocols you might want to use, e.g., 
 
 ```
 pip install federatedsecure-server
@@ -901,7 +901,7 @@ You can check that the server is running by browsing to
 curl http://localhost:55500/representations
 ```
 
-### Client-side Installation
+### 3.2.2. Client-Side Installation
 
 Client-side installation is likely a single command:
 
@@ -909,7 +909,7 @@ Client-side installation is likely a single command:
 pip install federatedsecure-client
 ```
 
-On machines where pip is not readily available as a command line tool (e.g. Android), the following workaround works directly in python:
+On machines where pip is not readily available as a command line tool (e.g., Android), the following workaround works directly in Python: 
 
 ```
 import pip
