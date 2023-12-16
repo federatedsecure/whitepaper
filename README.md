@@ -1260,3 +1260,31 @@ Regarding availability, there is a project website, a dedicated GitHub organizat
 To conclude, “Federated Secure Computing” is both an initiative and a middleware aiming to make PPC available to small and medium enterprises, startups, research and teaching institutions, and government agencies. The technology is available as free and open source software backed by Ludwig-Maximilians-Universität München and funded by Stifterverband.
 
 We hope this whitepaper enables anyone to join the Federated Secure Computing ecosystem. We welcome use cases from both the public and private sectors. We invite contributions to the codebase.
+
+## Author Contributions
+
+Conceptualization, H.B. and L.C.H.; methodology, H.B.; software, H.B.; validation, H.B.; formal analysis, H.B.; investigation, H.B.; resources, H.B.; data curation, H.B.; writing—original draft preparation, H.B.; writing—review and editing, H.B. and L.C.H.; visualization, H.B.; supervision, H.B.; project administration, H.B. and L.C.H.; funding acquisition, H.B. and L.C.H. All authors have read and agreed to the published version of the manuscript.
+
+## Funding
+
+This research was funded by Stifterverband, grant number H110 5114 5132 36534. The APC was funded by Stifterverband.
+
+## Institutional Review Board Statement
+
+Not applicable.
+
+## Informed Consent Statement
+
+Not applicable.
+
+## Data Availability Statement
+
+The complete source code is available as free and open source software under the MIT license at https://github.com/federatedsecure (accessed on 23 August 2023).
+
+## Acknowledgments
+
+The authors acknowledge administrative and technical support from LMU Munich and LMU University Hospital Munich. The authors are grateful for extensive mentoring and guidance by Stifterverband and Project Together during the competition phase. The authors thank individuals from GitHub, Amazon Web Services, and Max Planck Institute for Innovation and Competition for fruitful discussion and support during grant application. We gratefully acknowledge the support of NVIDIA Corporation with the donation of GPU hardware.
+
+## Conflicts of Interest
+
+H.B. and L.C.H. are affiliated with LMU Munich. LMU Munich received third-party funding for this project from Stifterverband. The funders had no role in the design of the study; in the collection, analyses, or interpretation of data; in the writing of the manuscript; or in the decision to publish the results.
