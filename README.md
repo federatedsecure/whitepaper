@@ -246,66 +246,75 @@ It achieves this as a middleware between client-side business logic and server-s
 ![](images/concept2.png)
 
 
-## Client-Server Topologies
+## 2.4. Client–Server Topologies
 
 While the decision to have exactly one server per data owner seems to be quite strong, there really is no restriction on the actual topology of the PPC protocols employed in the backend.
 
-In PPC lingo, there are <strong>data nodes</strong> (providing input data), <strong>compute nodes</strong> (running the protocols), and <strong>researcher nodes</strong> (providing control flow and receiving results). Here, we have <strong>server nodes</strong> and <strong>client nodes</strong> which may or may not coincide with data, compute, and/or researcher nodes.
+In PPC lingo, there are data nodes (providing input data), compute nodes (running the protocols), and researcher nodes (providing control flow and receiving results). Here, we have server nodes and client nodes, which may or may not coincide with data, compute, and/or researcher nodes.
 
-### Example 1: clients act as data and researcher nodes, servers act as compute nodes
+### 2.4.1. Example 1: Clients Act as Data and Researcher Nodes and Servers Act as Compute nodes
 
 This topology is suitable when there are several equal and simultaneously active researchers in a symmetric peer-to-peer network.
 
-#### Figure 1
+Clients send unencrypted input data and control flow to their respective servers. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients, Figure 3.
+
+#### Figure 3. Symmetric peer-to-peer topology with one client (researcher) per server. 
 ![](images/example1.png)
 
-Clients send unencrypted input data and control flow to their respective server. Servers host the PPC protocol and thus act as compute nodes. They break the input data into cryptographic shares and inject it into the protocol. They execute the protocol on encrypted shares and send the result back to their clients.
+The propaedeutic protocol Simon (SImple Multiparty computatiON) uses this topology and is provided with the reference implementation as a working example.
 
-The propaedeutic protocol **SIMON** (**SI**mple **M**ultiparty computati**ON**) uses this topology.
+### 2.4.2. Example 2: Servers Act as Data and Compute Nodes, and a Single Client Acts as Researcher Node
 
-### Example 2: servers act as data and compute nodes, single client as researcher node
+The difference to Example 1 is that data are hosted on the server, not on the client. This is a more likely case in institutions where data are not supposed to be seen even by their own clients and researchers.
 
-The difference to Example 1 is that data is hosted on the server, not on the client. This is a more likely case in institutions where data is not supposed to be seen even by their own clients and researchers.
+In this case, there is no need for more than one researcher (of course, having one researcher per server is still a perfectly viable option). The single researcher may send control flow to all servers (rendering synchronization trivial) and receive only the result of the computation (but has no access to input data on the servers), Figure 4.
 
-#### Figure 2
+#### Figure 4. Topology with a single central client (researcher). 
 
 ![](images/example2.png)
 
-In this case, there is no need for more than one researcher (of course, having one researcher per server is still perfectly an option). The single researcher may send control flow to all servers (rendering synchronization trivial) and receive only the result of the computation (but has no access to input data on the servers).
+Using server-side object representation, it is possible to write wrappers for server-side database handles and access them through the client. In this case, care must be taken to properly secure the API, in particular by object-level authorization.
 
-Using server-side object representation, it is possible to write wrappers for server-side data base handles and access them through the client. Care must be taken in this case to properly secure the API, in particular by object level authorization.
+This topology is suitable if there is a privileged researcher and a number of independent contributors. For example, a university hospital researching the data of teaching hospitals; a government agency using data of regional bodies; a parent company analyzing subsidiaries; an industry association providing benchmarks to their member companies; etc.
 
-This topology is suitable if there is a privileged researcher and a number of independent contributors. For example, a university hospital researching the data of teaching hospitals; a government agency using data of regional bodies; a parent company analyzing subsidiaries; an industry association providing benchmarks to their member companies; etc. 
+### 2.4.3. Example 3: Servers Run Middleware Only, and Additional Compute Nodes Are in the Backend
 
-### Example 3: servers run middleware only, additional compute nodes in the backend
+Some PPC protocols might require a certain compute cluster of their own. For example, some SMPC protocols use three independent compute nodes, irrespective of the number of data nodes. In this case, the role of the Federated Secure Computing servers is “only” to act as a gateway hosting a translatory middleware, Figure 5.
 
-Some PPC protocols might require a certain compute cluster of their own. For example, some SMPC protocols use three independent compute nodes, irrespective of the number of data nodes.
-
-#### Figure 3
+#### Figure 5. Topology where servers run middleware only and compute cloud as backend. 
 
 ![](images/example3.png)
 
-In this case, the role of the Federated Secure Computing servers is “only” to act as a gateway hosting a translatory middleware.
+The middleware receives input data and translates them into cryptographic shares according to the protocol of the compute cluster; the middleware receives control flow from the client and accordingly instructs the compute cluster.
 
-They middleware receives input data and translates it into cryptographic shares according to the protocol of the compute cluster; the middleware receives control flow from the client and accordingly instructs the compute cluster.
+This topology is useful if one wants to combine the client-side simplicity of Federated Secure Computing with a more mature and complete solution to run the actual computations on the backend. For example, a Carbyne Stack (Robert Bosch GmbH, 2022, Stuttgart, Germany) compute cluster would be a useful backend.
 
-This topology is useful if one wants to combine the client-side simplicity of Federated Secure Computing with a more mature and complete solution to run the actual computations on the backend.
+### 2.4.4. Example 4: DataSHIELD
 
-For example, a [Carbyne Stack](https://carbynestack.io) compute cluster would be a useful backend.
+DataSHIELD [20,21] is a popular PPC solution in academic and data science settings. It features a central compute node that receives aggregated data from data nodes, aggregates it further, and forwards the summary statistics to the researcher.
 
-### Example 4: DataSHIELD
+If one should want to capsulate the DataSHIELD server behind a Federated Secure Computing middleware, the topology will look like Figure 6.
 
-[DataSHIELD](https://www.datashield.org) is a popular PPC solution in academic and data science settings. It features a central compute node that receives aggregated data from data nodes, aggregates it further, and forwards the summary statistics to the researcher.
-
-If one wants to capsulate the DataSHIELD server behind a Federated Secure Computing middleware, the topology will look like this figure:
-
-#### Figure 4
+#### Figure 6. DataSHIELD topology. 
 
 ![](images/example4.png)
 
 In a way, this is a combination of Example 2 (a single researcher) and Example 3 (pure middleware functionality of Federated Secure Computing).
 
-It might be useful if one wants to use client-side languages other than R to develop scripts; or it might be convenient to include DataSHIELD for its statistical power to process e.g. metadata of data that is analyzed in full by other protocols such as secure multiparty computation.
+It might be useful if one wants to use client-side languages other than R to develop scripts, or it might be convenient to include DataSHIELD for its statistical power to process, e.g., metadata of data that are analyzed in full by other protocols such as secure multiparty computation.
+
+### 2.4.5. Heterogeneous Networks
+
+Finally, the architecture is able to accommodate mixed topologies.
+
+In Example 1 above, it may be that some sites keep their data on the client side (as shown in Figure 3) while others retain their databases on the server side (as shown in Figure 4). Then, the sites simply need different data input instructions in their respective client-side code.
+
+In Examples 1 and 2 above, it may be that some sites have their dedicated researcher (as shown in Figure 3) while some of them form—potentially multiple—pools overlooked by a central researcher. Layered topologies are also feasible where the output of one layer of federated computation becomes input to the next layer.
+
+The only practical restriction is that all parties within one layer or federated cloud need to agree on the same cryptographic protocol to be used and run server-side.
+
+Finally, it could even be that some parties use middleware while others natively run their frameworks as long as the cryptographic communication is compatible.
+
 
 ## Client-Side Stack
 
