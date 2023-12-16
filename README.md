@@ -316,13 +316,13 @@ The only practical restriction is that all parties within one layer or federated
 Finally, it could even be that some parties use middleware while others natively run their frameworks as long as the cryptographic communication is compatible.
 
 
-## Client-Side Stack
+## 2.5. Client-Side Stack
 
-### Representation of server-side objects
+### 2.5.1. Representation of Server-Side Objects
 
-Our design goal is to render client-side business-logic development as simple as possible. We do not want any specific dependencies client-side, and we would like to go through the API as transparent as possible. Hence, we would like to be able to write client-side code like this:
+Our design goal is to render client-side business logic development as simple as possible. We do not want any specific dependencies on the client side, and we would like to go through the API as transparently as possible. Hence, we would like to be able to write client-side code like this (Listing 1): 
 
-#### Code Listing 1 – Example of how client-side code should interact with server-side objects
+#### Listing 1. Example of how client-side code should interact with server-side objects.
 
 ```python
 import federatedsecure.client
@@ -331,13 +331,13 @@ import federatedsecure.client
 api = federatedsecure.client.connect(“https://my.server”)
 
 # find a microservice that matches some requirements
-microservice = api.create(functionality=“can do some stuff”})
+microservice = api.create(functionality = “can do some stuff”})
 
 # connect to some specific server-side database
-database = api.create(connector=“myconnector”, version=“1.2.3”)
+database = api.create(connector = “myconnector”, version = “1.2.3”)
 
 # fetch input data
-data = database.get_handle().query(row=2, column=5)
+data = database.get_handle().query(row = 2, column = 5)
 
 # do some server-side computation
 result = microservice.compute(data)
@@ -346,80 +346,80 @@ result = microservice.compute(data)
 print(api.download(result))
 ```
 
-There are two functions that translate between server-side and client-side:
+There are two functions that translate between the server side and the client side:
 
-`api.create` returns a handle to a top-level server-side object, typically a microservice. It is given some arguments describing the desired microservice. 
+`api.create` returns a handle to a top-level server-side object, typically a microservice. Some arguments are provided that describe the desired microservice.
 
-`api.download` serializes the server-side data belonging to some handle and returns it to the client.
+`api.download` serializes the server-side data belonging to some handle and returns them to the client.
 
-This means that all the other variables in above pseudocode (`microservice`, `database`, `data`, and `result`) are simply handles to server-side objects. The client can access them through the API and trigger server-side behavior without any client-side dependencies. We achieve this by using a wrapper class called `Representation`.
+This means that all the other variables in above pseudocode (`microservice`, `database`, `data`, and `result`) are simply handles for the server-side objects. The client can access them through the API and trigger server-side behavior without any client-side dependencies. We achieve this by using a wrapper class called Representation.
 
 As its name implies, it represents server-side objects. It stores a pointer to the API (so it can trigger requests to the API) and a unique identifier (UUID) of the server-side object. Access to member variables and functions can then be reflected on the API by passing the UUID.
 
-In Python, this is particularly straightforward:
+In Python, this is particularly straightforward (Listing 2): 
 
-#### Code Listing 2 – class Representation (simplified, see actual code!)
+#### Listing 2. Representation class (simplified).
 
 ```python
 class Representation:
 
-  def __init__(self, api, uuid):
-    self.api = api
-    self.uuid = uuid
+  def __init__(self, api, uuid):
+    self.api = api
+    self.uuid = uuid
 
-    def __getattr__(self, member_name):
-      return self.api.attribute(self.uuid, member_name)
+    def __getattr__(self, member_name):
+      return self.api.attribute(self.uuid, member_name)
 
-    def __call__(self, *args, **kwargs):
-        return self.api.call(self.uuid, *args, **kwargs)
+    def __call__(self, *args, **kwargs):
+        return self.api.call(self.uuid, *args, **kwargs)
 ```
 
 For example, `database.get_handle().query(row=2, column=5)` in fact creates four (!) representations: 1) of the member function `get_handle`, 2) of the result of invoking that member function without arguments, 3) of that result’s member function `query`, and 4) of the result of `query` with some arguments.
 
 Note that such nice syntactic sugar is not available in all programming languages. For example, in R the same code would read:
 
-#### Code Listing 3 – In some languages, client code will be more verbose than in Python
+#### Listing 3. In some languages, client code will be more verbose than in Python.
 
 ```r
-source (“.../federatedsecure/client.r”)
+source (“…/federatedsecure/client.r”)
 
 # connect to the server, return API handle
 api <- Api(“https://my.server”)
 
 # find a microservice that matches some requirements
-microservice <- api$create(kwargs=list(
-                  functionality=“can do some stuff”))
+microservice <- api$create(kwargs = list(
+               functionality = “can do some stuff”))
 
 # connect to some specific server-side database
-database <- api$create(kwargs=list(
-              connector=“myconnector”, version=“1.2.3”))
+database <- api$create(kwargs = list(
+           connector = “myconnector”, version = “1.2.3”))
 
 # fetch input data
 func_handle <- database$attribute(“get_handle”)
 handle <- func_handle$call()
 func_query <- handle$attribute(“query”)
-data <- func_query$call(list(row=2, column=5))
+data <- func_query$call(list(row = 2, column = 5))
 
 # do some server-side computation
 func_compute <- microservice$attribute(“compute”)
-result <- func_compute$call(list(data=data))
+result <- func_compute$call(list(data = data))
 
 # download and output the result
 print(api$download(result))
 ```
 
-### API Wrapper
+### 2.5.2. API Wrapper
 
-By using `Representation` the entire API traffic can be routed through very few RESTful endpoints, see Table 3.
+By using Representation, the entire API traffic can be routed through very few RESTful endpoints (see Table 3).
 
-#### Table 3 – API endpoints
+#### Table 3. API endpoints.
 
 <table>
  <thead>
   <tr>
-   <td>verb</td>
-   <td>endpoint</td>
-   <td>server-side effect and response</td>
+   <td>Verb</td>
+   <td>Endpoint</td>
+   <td>Server-Side Effect and Response</td>
   </tr>
  </thead>
  <tbody>
@@ -498,57 +498,57 @@ By using `Representation` the entire API traffic can be routed through very few 
 
 In these terms, it is easy to implement `api.create`, `api.download`, `api.call`, and `api.download` as used in the main routine and in  Representation above:
 
-#### Code Listing 4 – class Api (simplified, see actual code!)
+#### Listing 4. Api class (simplified).
 
 ```python
 class Api:
 
-    def __init__(self, url):
-        self.http = HttpInterface(url)
+  def __init__(self, url):
+    self.http = HttpInterface(url)
 
-    def list(self):
-        return self.http.GET('representations')
+  def list(self):
+    return self.http.GET('representations')
 
-    def create(self, *args, **kwargs):
-        response = self.http.POST('representations',
-                   body={'args': args, 'kwargs': kwargs})
-        return Representation(self, response['uuid'])
+  def create(self, *args, **kwargs):
+    response = self.http.POST('representations',
+         body = {'args': args, 'kwargs': kwargs})
+    return Representation(self, response['uuid'])
 
-    def upload(self, *args, **kwargs):
-        response = self.http.PUT('representations',
-                   body={'args': args, 'kwargs': kwargs})
-        return Representation(self, response['uuid'])
+  def upload(self, *args, **kwargs):
+    response = self.http.PUT('representations',
+         body = {'args': args, 'kwargs': kwargs})
+    return Representation(self, response['uuid'])
 
-    def call(self, uuid, *args, **kwargs):
-        response = self.http.PATCH('representation', uuid,
-                   body={'args': args, 'kwargs': kwargs})
-        return Representation(self, response['uuid'])
+  def call(self, uuid, *args, **kwargs):
+    response = self.http.PATCH('representation', uuid,
+         body = {'args': args, 'kwargs': kwargs})
+    return Representation(self, response['uuid'])
 
-    def attribute(self, uuid, attr):
-        response = self.http.GET('representation', uuid, attr)
-        return Representation(self, response['uuid'])
+  def attribute(self, uuid, attr):
+    response = self.http.GET('representation', uuid, attr)
+    return Representation(self, response['uuid'])
 
-    def download(self, representation):
-        response = self.http.GET('representation',
-                   representation.uuid)
-        return response['object']
+  def download(self, representation):
+    response = self.http.GET('representation',
+         representation.uuid)
+    return response['object']
 
-    def release(self, uuid):
-        self.http.DELETE('representation', uuid)
-        return None
+  def release(self, uuid):
+    self.http.DELETE('representation', uuid)
+    return None
 ```
 
-### Client design considerations
+### 2.5.3. Client Design Considerations
 
-**Programming language** - At the time of writing, there are API wrappers in Python, R, and JavaScript. As the client is very thin and only contains the classes Api and Representation and a HTTP interface, it is easy to develop API wrappers in other languages. And in principle, curl would suffice.
+Programming language — At the time of writing, there are API wrappers in Python, R, and JavaScript. As the client is very thin and only contains the classes Api and Representation and an HTTP interface, it is easy to develop API wrappers in other languages. And in principle, curl would suffice.
 
-**Thin client** – One should keep the client as thin as possible. We want client-side developers to be free in their choice of language, so any functionality that we introduce in one language’s API wrapper we would have to introduce in each. Also, we want the client to be small (read: kilobytes) so it can be used in IoT settings.
+Thin client — One should keep the client as thin as possible. We want client-side developers to be free in their choice of language, so any functionality that we introduce in one language’s API wrapper we would have to introduce in each. Also, we want the client to be small (read: kilobytes) so it can be used in IoT settings.
 
-**Macros should be server-side** – The last point implies that any macro functionality should not be written client-side. For example, if you want to combine several steps like connecting to a database, getting a handle, reading data and storing it into a single line of client-code, then you should write a small server-side extension for that. This way, the functionality will be available in all clients, and this eliminated several potentially slow and payload-heavy API calls. 
+Macros should be on the server side — The last point implies that any macro functionality should not be written on the client side. For example, if you want to combine several steps like connecting to a database, getting a handle, reading data, and storing it into a single line of client code, then you should write a small server-side extension for that. This way, the functionality will be available to all clients, and this eliminates several potentially slow and payload-heavy API calls.
 
-**Securing the API** – This is mainly a server-side concern, but one would probably have to account for authentication and authorization on the client, too. Federated Secure Computing is designed for propaedeutic settings, but if it were used in production, this would have to be adapted to the organization’s specific security implementation.
+Securing the API — This is mainly a server-side concern, but one would probably have to account for authentication and authorization on the client side, too. Federated Secure Computing is designed for propaedeutic settings, but if it were used in production, this would have to be adapted to the organization’s specific security implementation.
 
-**Full RPC framework** – Our implementation above is minimalistic and propaedeutic. It is a lean way to interact with server-side objects in a generic way. In a production setting, you might want to employ a more complete and stable framework for remote procedure calls.
+Full RPC framework — Our implementation above is minimalistic and propaedeutic. It is a lean way to interact with server-side objects in a generic way. In a production setting, you might want to employ a more complete and stable framework for remote procedure calls.
 
 ## Server-Side Stack
 
