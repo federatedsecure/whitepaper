@@ -550,110 +550,116 @@ Securing the API — This is mainly a server-side concern, but one would probabl
 
 Full RPC framework — Our implementation above is minimalistic and propaedeutic. It is a lean way to interact with server-side objects in a generic way. In a production setting, you might want to employ a more complete and stable framework for remote procedure calls.
 
-## Server-Side Stack
+## 2.6. Server-Side Stack
 
-### Registry, Discovery, and Bus
+### 2.6.1. Registry, Discovery, and Bus
 
-The core middleware consists at the minimum of a registry of server-side objects, a bus to access them, and a discovery mechanism to register top-level objects.
+The core middleware consists, at the minimum, of a registry of server-side objects, a bus to access them, and a discovery mechanism to register top-level objects.
 
-The **registry** holds pairs of top-level microservices and their description. At the minimum, it offers functionality to register another microservice and its description; list all registered microservices; or fetch a specific object that matches the requested description. This description is the abstraction that both the registry and the microservice depend upon, such that their implementation is decoupled (dependency-inversion-principle).
+The registry holds pairs of top-level microservices and their description. At the minimum, it offers functionality to register another microservice and its description, list all registered microservices, or fetch a specific object that matches the requested description. This description is the abstraction that both the registry and the microservice depend upon, such that their implementation is decoupled (dependency–inversion principle).
 
-The **discovery mechanism** scans for available microservices at startup and exposes the registry to them so that they may register themselves. In this way, one can add new microservices without modifying the server (open-closed-principle).
+The discovery mechanism scans for available microservices at startup and exposes the registry to them so that they may register themselves. In this way, one can add new microservices without modifying the server (open–closed principle).
 
-The **bus** exposes server-side objects to the API and to one another. These objects may be microservices from the original registry, but also any number of classes and instances that are created, modified, and discarded during runtime.
+The bus exposes server-side objects to the API and to one another. These objects may be microservices from the original registry but also any number of classes and instances that are created, modified, and discarded during runtime.
 
-### Open API 3.0
+### 2.6.2. OpenAPI 3.0
 
-The API is defined by an OpenAPI 3.0 compliant specification available at [https://github.com/federatedsecure/api](https://github.com/federatedsecure/api).
+The API is defined by an OpenAPI 3.0 [22] compliant description.
 
-For example, the PATCH endpoint reads:
+For example, the PATCH endpoint reads as follows (Listing 5). 
 
-#### Code Listing 5 – Open API 3.0 definition (excerpt)
+#### Listing 5. Open API 3.0 definition (excerpt).
 
 ```yaml
 /representation/{representation_uuid}:
-    patch:
-      summary: call a server-side object
-      description: call a server-side object such as a static
-      function, a member function, or in case of a class, its
-      constructor
-      operationId: call_representation
-      parameters:
-        - in: path
-          name: representation_uuid
-          required: true
-          schema:
-            type: string
-            format: uuid
-      requestBody:
-        $ref: '#/components/requestBodies/ArgsKwargs'
-      responses:
-        '200':
-          $ref: '#/components/responses/ResponseOk'
-        'default':
-          $ref: '#/components/responses/ResponseError'
+  patch:
+   summary: call a server-side object
+   description: call a server-side object such as a static
+   function, a member function, or in case of a class, its
+   constructor
+   operationId: call_representation
+   parameters:
+    - in: path
+     name: representation_uuid
+     required: true
+     schema:
+      type: string
+      format: uuid
+   requestBody:
+    $ref: '#/components/requestBodies/ArgsKwargs'
+   responses:
+    '200':
+     $ref: '#/components/responses/ResponseOk'
+    'default':
+     $ref: '#/components/responses/ResponseError'
 ```
 
-### Representation of server-side objects
+### 2.6.3. Representation of Server-Side Objects
 
 At the minimum, the bus offers functionality to create representations of registered microservices, create representations of directly uploaded data, create representations of member variables and member functions of represented objects, call a represented function, download the content of a representation, and release a representation. 
-Let us have a visual look at the life cycle of server-side object representation:
 
-#### Figure 5
+Figure 7 provides a visual look at the life cycle of server-side object representation:
+
+#### Figure 7. Lifecycle of server-side objects and their representations (simplified). 
 
 ![](images/serverside.png)
 
 At startup, microservices are discovered and announce themselves and their functionality to the registry.
+
 The client requests a microservice with certain abilities, and if a matching microservice is found in the registry, a pointer/handle is stored on the bus, and a UUID of that handle is returned to the client.
 
 In subsequent calls, the client refers to the microservice by that UUID. It may request attributes of that microservice. For example, if the microservice is represented by a class, that attribute may be a member function. Again, a pointer/handle to the attribute is stored on the bus, and another UUID is handed to the client. This process may repeat iteratively.
 
-If a handle represents a callable function, the client may call that function with additional arguments. Again, the result of the function call is not directly returned to the client, but stored on the bus, and yet another UUID is returned to the client. A minimal implementation of this functionality may be illustrated as follows:
+If a handle represents a callable function, the client may call that function with additional arguments. Again, the result of the function call is not directly returned to the client but stored on the bus, and yet another UUID is returned to the client. A minimal implementation of this functionality may be illustrated as follows (Listing 6): 
 
-#### Code Listing 6 – server-side implementation of calls to server-side objects (simplified)
+#### Listing 6. Server-side implementation of calls to server-side objects (simplified).
 
 ```python
 def call_representation(self, representation_uuid, body):
 
-    args, kwargs = self.get_arguments(body)
-    pointer = self.lut_uuid_to_repr[representation_uuid]
-    result = pointer(*args, **kwargs)
-    
-    if result is None:
-        return None
+  args, kwargs = self.get_arguments(body)
+  pointer = self.lut_uuid_to_repr[representation_uuid]
+  result = pointer(*args, **kwargs)
 
-    uuid = str(uuid.uuid4())
-    self.lut_uuid_to_repr[uuid] = result
-    return uuid
+  if result is None:
+    return None
+
+  uuid = str(uuid.uuid4())
+  self.lut_uuid_to_repr[uuid] = result
+  return uuid
 ```
 
 At some point, the result of the computation is reached. In this case, the client would like to download the result itself instead of a mere representation. The server serializes the result and returns it as a normal response body.
 
--	**Security consideration:** the client should not be able to access any data on the server. This can be solved by restricting the download functionality to certain objects labeled as output. Proper object-level authorization is thus required in production settings.
+* Security consideration: The client should not be able to access any data on the server. This can be solved by restricting the download functionality to certain objects labeled as output. Proper object-level authorization is thus required in production settings.
 
-Finally, the client may release any representation that it does not need any more. If those representations point to temporarily stored objects, those objects may be deleted. If the representation is of a static microservice or the like, only the representation on the bus is discarded.
+Finally, the client may release any representation that it does not need anymore. If those representations point to temporarily stored objects, those objects may be deleted. If the representation is of a static microservice or the like, only the representation on the bus is discarded.
 
--	**Best practice:** The client should send appropriate delete requests to the server whenever client-side representations are discarded or going out of scope. This prevents a buildup of obsolete representations on the bus and memory leakage on the server. As the server cannot control graceful termination of client-side scripts, additional garbage collection mechanisms may be a good idea. For example, automatic removal of unused representations after a certain grace period.
+* Best practice: The client should send appropriate delete requests to the server whenever client-side representations are discarded or going out of scope. This prevents a buildup of obsolete representations on the bus and memory leakage on the server. As the server cannot control the graceful termination of client-side scripts, additional garbage collection mechanisms may be a good idea. For example, automatic removal of unused representations after a certain grace period.
 
-- **Best practice:** The server may keep look-up-tables for the representation of commonly used objects instead of issuing new UUIDs every time.
+* Best practice: The server may keep look-up-tables for the representation of commonly used objects instead of issuing new UUIDs every time.
 
-### Microservices
+* Best practice: Implementation of microservices needs to balance the overhead of creating representations with microservice design. Few objects with many properties/methods each require fewer representations. Deeply nested object hierarchies, on the other hand, would lead to more intermediate handles being generated. Similarly, structures instead of many small arguments save representations: `somemicroservice.somefunction(someargument)` creates 3 representations while `somemicroservice.somemodule.somesubmodule.somefunction(argument1, argument2, argument3)` creates 7 representations. In particular, loops over function calls may create potentially very many representations, while calling a single function with a table or array would not.
+    
+### 2.6.4. Microservices
 
-The architecture is not opinionated on what kind of microservices might be hosted. In the context of Privacy-Preserving Computation (PPC), at least the following types of microservices will most probably be implemented:
+The architecture is not opinionated on what kind of microservices might be hosted. In the context of privacy-preserving computation (PPC), at least the following types of microservices will most probably be implemented:
 
--	**(required)** One or more PPC protocols. These microservices will at the minimum provide functionality to build peer-to-peer networks with other servers, accept input data and generate cryptographic shares, and execute the PPC protocol. They may interact with their peers through the bus and the API or through their own third-party networks.
+* **(Required)**: One or more PPC protocols. These microservices will, at the minimum, provide functionality to build peer-to-peer networks with other servers, accept input data and generate cryptographic shares, and execute the PPC protocol. They may interact with their peers through the bus and the API or through their own third-party networks;
 
--	**(optional)** Some basic microservices for synchronization, e.g. to broadcast public parameters of calculations to other nodes, or to control the joint flow of computation through semaphores and other signals.
+* **(Probably required)**: Some basic microservices for synchronization, e.g., to broadcast public parameters of calculations to other nodes or to control the joint flow of computation through semaphores and other signals;
 
-### Webserver and API
+* **(Optional)**: Helper microservices facilitation server-side integration into the non-cryptographic infrastructure. This includes interfaces to database prompts or interfaces to IoT data acquisition.
+
+### 2.6.5. Webserver and API
 
 The server will expose the public functionality of the bus to the client through an API. A regular webserver will be needed.
 
--	**Security consideration:** In a production setting, all the usual best practices of securing a webserver and API should be followed. In particular, user authentication and proper object-level authorization.
+* **Security consideration**: In a production setting, all the usual best practices of securing a webserver and API should be followed. In particular, user authentication and proper object-level authorization.
 
-### Programming language
+### 2.6.6. Programming Language
 
-There is no particular programming language required for the implementation of a Federated Secure Computing server. The propaedeutic reference implementation (see below) is in Python, though.
+There is no particular programming language required for the implementation of a Federated Secure Computing server. The propaedeutic reference implementation (see below) is in Python, though. If need be, different microservices may be implemented in different languages and communicate through the API with one another.
 
 # Results
 
