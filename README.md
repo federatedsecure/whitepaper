@@ -1222,3 +1222,35 @@ Due to its use in the German Medical Informatics Initiative (MII), the trusted c
 
 Sharemind is a powerful industry-grade solution for secure computing. It employs secure multiparty computation with end-to-end data protection and accountability. Sharemind is currently evaluated as a fully-fledged backend solution, and an interface is being developed.
 
+
+# 4. Discussion
+
+## 4.1. Project Background and Ownership
+ 
+In 2019, we conducted the world’s first SMPC calculation with real patient data between the university hospitals of LMU Munich and Charité Berlin [23,24,25]. Custom cryptography based on the FRESCO/SPDZ framework [26,27,28] had to be developed by a specialist security researcher from TUM. Dedicated hardware servers had to be serviced by system administrators. Preparation and execution took several months. Our experience confirmed that privacy-preserving computation was viable but difficult to use.
+
+In 2020, interviews with companies and government agencies confirmed our own experience. Making their data available for secure analysis without the need for data sharing or a trusted third party seemed very attractive. On the other hand, they were very reluctant to use a technology that was poorly understood by their developers and data security officers; exotic tech stacks and missing skills were almost always a showstopper. Simultaneously, a market scan revealed that there were attractive and powerful PPC frameworks already available, both open source and proprietary. In fact, most of the explored potential use cases would require only the most basic algorithms that had been well described in the literature. Thus, it became clear that “the technology was already there”. What was really required was rather a simple middleware to provide a better DevSecOps experience.
+
+“Multiparty Computation as a Service” was the first attempt to disentangle the cryptography layer from business logic and move the complex and computing-intensive workload to the cloud. It was successfully tested at a private healthcare company in May 2020, when it was installed in two remote locations within 15 min and performed a distributed analysis within seconds.
+
+In 2021, bytes for life GmbH, a Munich-based cloud computing startup, conceived “Federated Secure Computing”, the architecture described in this paper, and developed a reference implementation. The technology was provided to LMU University Hospital for “Wirkung hoch 100”, a national competition by Stifterverband (the German donors’ association) with the declared aim to improve the German education, science, and innovation ecosystem. Over a year, the team refined their solution to achieve systemic impact. During the process, “Federated Secure Computing” was made free and open source. In November 2021, Stifterverband awarded its Innovation Prize to Federated Secure Computing and provided three years of funding to further develop the technology [29,30,31].
+
+In 2022, the complete IP and all assets were transferred by bytes for life GmbH to Ludwig-Maximilians-Universität München (LMU Munich). As an excellence university, LMU Munich is in the best position to host the open source project long-term and champion its scientific and economic development.
+
+## 4.2. Project Status
+
+As of the writing of this paper, most design goals have been achieved.
+
+Regarding architecture, different topologies with any number of data, compute, and research nodes are feasible. There is a strict client–server separation of cryptography and business logic concerns.
+
+Regarding implementation, the server-side reference implementation is 100% Python without any exotic dependencies. The client side is non-opinionated, and stubs to the OpenAPI interface are available for over a dozen programming languages. The software has been tested in propaedeutic settings and was usable by non-expert programmers.
+
+Regarding functionality, there is a working implementation of a propaedeutic SImple Multiparty Computation (Simon) protocol offering some of the most often used algorithms as a collection of microservices. At the time of writing, there are microservices for secure sum and secure matrix multiplication, private set intersection, private set intersection size, univariate and bivariate statistics, frequency histograms and contingency tables, and ordinary least squares regression.
+
+Regarding DevOps, our software has been successfully installed and run in minutes on hardware from dedicated servers to heterogeneous clients to IoT devices. Writing a simple, secure computation takes less than a dozen lines of user code.
+
+Regarding IoT, both the client-side and server-side software are lean enough to run on Raspberry Zero devices or last-generation (G3) smartphones. We tested on as early as the Samsung Galaxy XCover 2 model (GT-S7710) from 2013.
+
+Regarding FOSS, the software comes with a permissive MIT license. The IP is owned by LMU Munich, a very reputable university and non-profit institution by the State of Bavaria under German and Bavarian law.
+
+Regarding availability, there is a project website, a dedicated GitHub organization with a dashboard and structured repositories, a number of easy-to-install PyPI packages, and this whitepaper.
