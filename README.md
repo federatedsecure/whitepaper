@@ -1254,3 +1254,9 @@ Regarding IoT, both the client-side and server-side software are lean enough to 
 Regarding FOSS, the software comes with a permissive MIT license. The IP is owned by LMU Munich, a very reputable university and non-profit institution by the State of Bavaria under German and Bavarian law.
 
 Regarding availability, there is a project website, a dedicated GitHub organization with a dashboard and structured repositories, a number of easy-to-install PyPI packages, and this whitepaper.
+
+# 5. Conclusions
+
+To conclude, “Federated Secure Computing” is both an initiative and a middleware aiming to make PPC available to small and medium enterprises, startups, research and teaching institutions, and government agencies. The technology is available as free and open source software backed by Ludwig-Maximilians-Universität München and funded by Stifterverband.
+
+We hope this whitepaper enables anyone to join the Federated Secure Computing ecosystem. We welcome use cases from both the public and private sectors. We invite contributions to the codebase.
