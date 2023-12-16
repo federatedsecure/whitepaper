@@ -661,42 +661,42 @@ The server will expose the public functionality of the bus to the client through
 
 There is no particular programming language required for the implementation of a Federated Secure Computing server. The propaedeutic reference implementation (see below) is in Python, though. If need be, different microservices may be implemented in different languages and communicate through the API with one another.
 
-# Results
+# 3. Results
 
-## Implementation
+## 3.1. Implementation
 
-### Namespaces
+### 3.1.1. Namespaces
 
-The following namespaces are used or are reserved for future use, see Table 4.
+The following namespaces are used or are reserved for future use (see Table 4).
 
-#### Table 4 - Namespaces
+#### Table 4. Namespaces.
 
 <table>
  <thead>
   <tr>
-   <td><strong>language</strong></td>
-   <td><strong>namespace structure</strong></td>
+   <td><strong>Language</strong></td>
+   <td><strong>Namespace Structure</strong></td>
   </tr>
  </thead>
  <tbody>
   <tr>
-   <td><strong>Python</strong></td>
+   <td>Python</td>
    <td>
     <ul>
-     <li><strong>federatedsecure</strong></li>
-     <li>federatedsecure.<strong>client</strong></li>
-     <li>federatedsecure.<strong>server</strong></li>
-     <li>federatedsecure.<strong>services</strong></li>
-     <li>federatedsecure.services.<strong>&#60;name&#62;.*</strong> (see below)</li>
-     <li>federatedsecure.services.<strong>&#60;category&#62;.&#60;name&#62;.*</strong> (see below)</li>
+     <li>federatedsecure</li>
+     <li>federatedsecure.client</li>
+     <li>federatedsecure.server</li>
+     <li>federatedsecure.services</li>
+     <li>federatedsecure.services.&#60;name&#62;.* (see below)</li>
+     <li>federatedsecure.services.&#60;category&#62;.&#60;name&#62;.* (see below)</li>
     </ul>
    </td>
   </tr>
   <tr>
-   <td><strong>Java</strong></td>
+   <td>Java</td>
    <td>
     <ul>
-     <li><strong>com.federatedsecure.*</strong></li>
+     <li>com.federatedsecure.*</li>
     </ul>
    </td>
   </tr>
@@ -704,22 +704,22 @@ The following namespaces are used or are reserved for future use, see Table 4.
 </table>
 
 
-### Packages
+### 3.1.2. Packages
 
-The following packages are available, see Table 5.
+The following packages are available (see Table 5).
 
-#### Table 5 - Packages
+#### Table 5. Packages. 
 
 <table>
  <thead>
   <tr>
-   <td><strong>repository</strong></td>
-   <td><strong>packages</strong></td>
+   <td><strong>Repository</strong></td>
+   <td><strong>Packages</strong></td>
   </tr>
  </thead>
  <tbody>
   <tr>
-   <td><strong>PyPI</strong></td>
+   <td>PyPI</td>
    <td>
     <ul>
      <li>federatedsecure-client</li>
@@ -732,17 +732,17 @@ The following packages are available, see Table 5.
 </table>
 
 
-### Repository structure
+### 3.1.3. Repository Structure
 
-At the time of writing, the following repositories are public on GitHub, see Table 6.
+At the time of writing, the following repositories are public on GitHub (see Table 6).
 
-#### Table 6 - GitHub repository structure and contents
+#### Table 6. GitHub repository structure and contents. 
 
 <table>
  <thead>
   <tr>
    <td><strong>GitHub repository</strong></td>
-   <td><strong>contents</strong></td>
+   <td><strong>Contents</strong></td>
   </tr>
  </thead>
  <tbody>
@@ -750,7 +750,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td><strong>.github</strong></td>
    <td>
     <ul>
-     <li>top-level <strong>README.md</strong> of the organization</li>
+     <li>top-level README.md of the organization</li>
     </ul>
    </td>
   </tr>
@@ -758,7 +758,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td><strong>api</strong></td>
    <td>
     <ul>
-     <li><strong>OpenAPI 3.0 specification</strong> used by both client and server</li>
+     <li>OpenAPI 3.0 specification used by both client and server</li>
     </ul>
    </td>
   </tr>
@@ -766,7 +766,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td><strong>client-&#60;language&#62;</strong></td>
    <td>
     <ul>
-     <li>client libraries providing <strong>API wrappers</strong> in multiple languages</li>
+     <li>client libraries providing API wrappers in multiple languages</li>
      <li>top-level directory may contain “src”, “test”, “docs” etc.</li>
      <li>examples beyond a simple hello world should go with the services' repositories and should work with multiple clients</li>
     </ul>
@@ -776,7 +776,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td><strong>server</strong></td>
    <td>
     <ul>
-     <li><strong>core middleware</strong> as importable library (without webserver runtime)</li>
+     <li>core middleware as importable library (without webserver runtime)</li>
      <li>implemented in Python only (no top-level language directories)</li>
      <li>top-level directory contains “src”, “docs”, “examples”, and “pypi”</li>
      <li>the “pypi” directory contains the Python Package Index manifest</li>
@@ -788,7 +788,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td>
     <ul>
      <li>larger, complex microservices</li>
-     <li>typically, <strong>PPC protocols</strong> and interfaces to <strong>3rd party PPC backends</strong></li>
+     <li>typically, PPC protocols and interfaces to 3rd party PPC backends</li>
      <li>e.g. “service-simon” (SImple Multiparty computatiON) is a simple, propaedeutic secure multiparty computation (SMPC) protocol </li>
      <li>e.g. “service-datashield” would be an interface to DataSHIELD</li>
     </ul>
@@ -807,7 +807,7 @@ At the time of writing, the following repositories are public on GitHub, see Tab
    <td><strong>webserver-&#60;name&#62;</strong></td>
    <td>
     <ul>
-     <li>premade <strong>webserver runtimes</strong></li>
+     <li>premade webserver runtimes</li>
      <li>e.g. “webserver-connexion” or “webserver-django”</li>
      <li>further webserver stubs can be generated by the Swagger utilities from the API definition</li>
     </ul>
@@ -825,11 +825,11 @@ At the time of writing, the following repositories are public on GitHub, see Tab
 </table>
 
 
-### Correspondence
+### 3.1.4. Correspondence
 
-Namespaces, PyPI packages, and repositories relate as follows, see Table 7.
+Namespaces, PyPI packages, and repositories relate as follows (see Table 7).
 
-#### Table 7 - relation between namespaces, packages, and GitHub repositories
+#### Table 7. Relation between namespaces, packages, and GitHub repositories. 
 
 <table>
  <thead>
@@ -864,9 +864,9 @@ Namespaces, PyPI packages, and repositories relate as follows, see Table 7.
 </table>
 
 
-### Code availability and licensing
+### 3.1.5. Code Availability and Licensing
 
-The software is available as free and open source at https://github.com/federatedsecure
+The software is available, free, and open source at https://github.com/federatedsecure (accessed on 23 August 2023).
 
 All public repositories under this GitHub organization come with the MIT license.
 
