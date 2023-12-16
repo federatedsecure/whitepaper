@@ -58,7 +58,7 @@ In this work, we present an architecture that alleviates several of the perceive
 
 # 2. Methods
 
-## 2.1 Pain Points and Design Goals
+## 2.1. Pain Points and Design Goals
 
 The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns (see Table 1).
 
@@ -231,6 +231,19 @@ The resulting design decisions are listed in Table 2.
   </tr>
  </tbody>
 </table>
+
+
+## 2.3. Overall Concept of Federated Secure Computing
+
+Federated Secure Computing connects heterogeneous systems (federation) through privacy-preserving computing protocols (secure computing), Figure 1.
+
+#### Figure 1. Federated Secure Computing. 
+![](images/concept1.png)
+
+It achieves this as a middleware between client-side business logic and server-side cryptography backends. It encapsulates the secure computing functionality through specific microservices and exposes them to the clients through an easy-to-use API, Figure 2.
+
+#### Figure 2. Flow of control, separation of concerns between client and server side, and API/microservice architecture. 
+![](images/concept2.png)
 
 
 ## Client-Server Topologies
