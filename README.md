@@ -1101,3 +1101,124 @@ After this process, which takes about five minutes, one can develop Federates Se
 
 ![](images/figure6a.png) ![](images/figure6b.png)
 
+
+## 3.4. Other Computing Frameworks
+
+In the above, we have used “Simon” (SImple Multiparty computatiON) as an example of secure multiparty computation in a peer-to-peer network. Simon is provided as a package in the main repository with a free license. It is, in fact, intended to be used as a fast propaedeutic example without the need for more elaborate third-party backends. However, there has been some experience with other methods and setups:
+
+### 3.4.1. Homomorphic Encryption with Amazon Web Services
+
+A very early implementation of Federated Secure Computing in 2020 compared the performance of earlier work [23,24,25] to a new architecture based on dedicated microservices. In particular, the amount of effort to implement a solution was a concern, as was the achievable precision and computing time.
+
+At the time, a prototype of Federated Secure Computing was run in a public cloud (Amazon Web Services, AWS, Seattle, WA, USA) as “serverless” microservices (AWS Lambda). It implemented “Sophie” for “simple homomorphic encryption” and was basically a trusted computing framework with some level of privacy protection through local aggregation and homomorphic obfuscation.
+
+The use of a public cloud provider, serverless microservices, the public cell phone network, consumer hardware, and Python language were conceptual highlights. The performance results were promising and motivated the further development of Federated Secure Computing, Table 13.
+
+#### Table 13. Secure multiparty computation vs. an early version of Federated Secure Computing.
+
+<table>
+ <thead>
+  <tr>
+   <td></td>
+   <td><strong>Earlier Work</strong> [12,13,14,15,16,17,18,20,21,22,23,24,25]</td>
+   <td><strong>Federated Secure Computing</strong></td>
+  </tr>
+ </thead>
+ <tbody>
+   <tr>
+    <td>data</td>
+    <td><ul>
+        <li>real patient data</li>
+    </ul></td>
+    <td><ul>
+        <li>pseudodata</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>routing</td>
+    <td><ul>
+        <li>Munich to Berlin (500 km)</li>
+        <li>LMU to Charité</li>
+        <li>fast internet backbone</li>
+    </ul></td>
+    <td><ul>
+        <li>Munich to Frankfurt (300 km)</li>
+        <li>LMU to AWS eu-central-1</li>
+        <li>public 4G mobile network</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>protocol</td>
+    <td><ul>
+        <li>secure multiparty computation</li>
+    </ul></td>
+    <td><ul>
+        <li>(weak) homomorphic encryption</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>software</td>
+    <td><ul>
+        <li>FRESCO, SPDZ</li>
+    </ul></td>
+    <td><ul>
+        <li>fdrtd 0.3.1 (build 2020-03-02)</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>hardware</td>
+    <td><ul>
+        <li>Intel Xeon Silver 4112 CPU</li>
+        <li>8 cores, 2.6 GHz, 8 MB cache</li>
+        <li>128 GB RAM</li>
+        <li>1 Gb/s ethernet networking</li>
+    </ul></td>
+    <td><ul>
+        <li>Samsung Galaxy Xcover 4</li>
+        <li>Exynos 7570 CPU, 4 × 1.40 GHz</li>
+        <li>2 GB RAM</li>
+        <li>~100 Mb/s LTE networking</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>implementation effort</td>
+    <td><ul>
+        <li>several months of preparation</li>
+        <li>two systems administrators</li>
+        <li>one crypto expert programmer</li>
+    </ul></td>
+    <td><ul>
+        <li>around 15 min</li>
+        <li>9 lines of Python code</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>achieved precision</td>
+    <td><ul>
+        <li>1.8% to 11.7% relative numerical error</li>
+    </ul></td>
+    <td><ul>
+        <li>exact to floating point machine precision</li>
+    </ul></td>
+   </tr>  
+   <tr>
+    <td>runtime</td>
+    <td><ul>
+        <li>1229 s</li>
+    </ul></td>
+    <td><ul>
+        <li>4.5 s</li>
+    </ul></td>
+   </tr>  
+ </tbody>
+</table>
+
+
+### 3.4.2. Differential Privacy with DataSHIELD as Backend
+
+Due to its use in the German Medical Informatics Initiative (MII), the trusted computing framework DataSHIELD might be a desirable backend option. A student implemented an interface to DataSHIELD as a collection of microservices as part of a third-party-funded project. Functionality was demonstrated, and calculations were successfully performed. Performance was in line with raw DataSHIELD performance without measurable overhead by the middleware. A refactored version of the interface may be added to the Federated Secure Computing repository at a later time.
+
+### 3.4.3. Secure Multiparty Computation with Sharemind
+
+Sharemind is a powerful industry-grade solution for secure computing. It employs secure multiparty computation with end-to-end data protection and accountability. Sharemind is currently evaluated as a fully-fledged backend solution, and an interface is being developed.
+
