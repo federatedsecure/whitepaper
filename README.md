@@ -58,19 +58,17 @@ In this work, we present an architecture that alleviates several of the perceive
 
 # 2. Methods
 
-## Pain Points and Design Goals
+## 2.1 Pain Points and Design Goals
 
-Presently, PPC still has several barriers to entry. Some are one the business side (lacking financial incentives, unproven business models) ore purely historical (lack of visible role models and successful show cases). These are out of the scope. However, many barriers are related to rather technical pain points that render development, deployment, and operation of PPC solutions cumbersome and difficult. These can and should be addressed by the architecture.
+The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns (see Table 1).
 
-The following pain points are recurring topics in the literature, have been encountered in interviews with prospective early adopters, or have been experienced firsthand by the authors. Each has led to the formulation of a specific design goal addressing those concerns, see Table 1.
-
-#### Table 1 – pain points and derived design goals
+#### Table 1. Pain points and derived design goals.
 
 <table cellspacing="0" cellpadding="0" border="1">
  <thead>
   <tr>
-   <td><strong>pain points</strong></td>
-   <td><strong>design goals</strong></td>
+   <td><strong>Pain Points</strong></td>
+   <td><strong>Design Goals</strong></td>
   </tr>
  </thead>
  <tbody>
@@ -78,15 +76,15 @@ The following pain points are recurring topics in the literature, have been enco
    <td colspan="2"><strong>related to capabilities (C)</strong></td>
   </tr>
   <tr>
-   <td>front-end and business logic developers rarely have any expert knowledge in PPC</td>
+   <td>front-end and business logic developers rarely have any expert knowledge of PPC</td>
    <td>provide high-level computing routines that hide low-level cryptography protocols <strong>(C1)</strong></td>
   </tr>
   <tr>
    <td>PPC is inaccessible to marginal groups lacking computing and personal resources</td>
-   <td>build a minimalistic solution that can be run by a single developer on a Raspberry Pi <strong>(C2)</strong></td>
+   <td>build a minimalistic solution that can be run by a single developer on a Raspberry Pi [19] <strong>(C2)</strong></td>
   </tr>
   <tr>
-   <td>PPC is difficult to teach and to experience in the limited time frame of a typical lesson</td>
+   <td>PPC is difficult to teach and experience in the limited time frame of a typical lesson</td>
    <td>provide a propaedeutic solution that works in a school or university teaching setting <strong>(C3)</strong></td>
   </tr>
   <tr>
@@ -94,7 +92,7 @@ The following pain points are recurring topics in the literature, have been enco
   </tr>
   <tr>
    <td>PPC often appears as the core functionality, so far as to even require to be a main routine</td>
-   <td>PPC should be a network-level concern and separated from high-level concerns <strong>(D1)</strong></td>
+   <td>PPC should be a network-level concern, separated from high-level concerns <strong>(D1)</strong></td>
   </tr>
   <tr>
    <td>introducing PPC functionality to a business logic often requires a complete rework</td>
@@ -102,21 +100,21 @@ The following pain points are recurring topics in the literature, have been enco
   </tr>
   <tr>
    <td>PPC frameworks require a specific tech stack and introduce a lot of dependencies</td>
-   <td>the client-side and the core of the server-side should be free of any dependencies <strong>(D3)</strong></td>
+   <td>client side and the core of the server side should be free of any dependencies <strong>(D3)</strong></td>
   </tr>
   <tr>
    <td>coding for any particular PPC framework locks the developer to a specific language</td>
-   <td>let client-side developers freely choose their language or keep using the legacy one <strong>(D4)</strong></td>
+   <td>let client-side developers freely choose their language or keep the legacy one <strong>(D4)</strong></td>
   </tr>
   <tr>
    <td colspan="2"><strong>related to security concerns (S)</strong></td>
   </tr>
   <tr>
    <td>some PPC frameworks are developed by non-experts in cryptography and are unsafe</td>
-   <td>do not reinvent the wheel, make use of existing and proven PPC frameworks <strong>(S1)</strong></td>
+   <td>do not reinvent the wheel; make use of existing and proven PPC frameworks <strong>(S1)</strong></td>
   </tr>
   <tr>
-   <td>PPC involves sensitive data that should not be visible to the front-end or the outside</td>
+   <td>PPC involves sensitive data that should not be visible to the front end or the outside</td>
    <td>enable topologies with data flow confined to trusted machines on the backend <strong>(S2)</strong></td>
   </tr>
   <tr>
@@ -132,11 +130,11 @@ The following pain points are recurring topics in the literature, have been enco
   </tr>
   <tr>
    <td>PPC often requires all parties to agree on the exact same tech stack and IT environment</td>
-   <td>enable joint computation between parties using different hardware and software <strong>(O1)</strong></td>
+   <td>enable joint computation between parties using different hardware or software <strong>(O1)</strong></td>
   </tr>
   <tr>
    <td>without a lot of experience, it is often unclear which PPC framework is best suited for a task</td>
-   <td>frameworks should be replaceable without the need to rewrite the business logic <strong>(O2)</strong></td>
+   <td>frameworks should be replaceable without the need to rewrite business logic <strong>(O2)</strong></td>
   </tr>
   <tr>
    <td>universal PPC solutions often have enormous overhead in terms of space and processing</td>
@@ -145,49 +143,45 @@ The following pain points are recurring topics in the literature, have been enco
  </tbody>
 </table>
 
-At its highest level, the architecture is dictated by a twofold separation:
-
-* Business logic needs to be disentangled from cryptography protocols (separation of concerns, dependency inversion)
-*	Data flows of different data owners need to be separated from one another until they hit the underlying cryptography layer (privacy)
+At its highest level, the architecture is dictated by a twofold separation: Business logic needs to be disentangled from cryptography protocols (separation of concerns, dependency inversion). And data flows of different data owners need to be separated from one another until they hit the underlying cryptography layer (privacy).
 
 The first point is conveniently solved by a client/server architecture. Providing server-side PPC protocols through microservices and a web API to the client-side business logic addresses several of the above design goals.
 
-However, if clients are to be entirely free of any cryptography concerns, they cannot send cryptographic shares to the server, but need to be able to send raw data in the clear. This is also true because the client should be agnostic to which particular PPC protocol is run by the server, as different protocols require quite different generation of shares.
+However, if clients are to be entirely free of any cryptography concerns, they cannot send cryptographic shares to the server but need to be able to send raw data in the clear. This is also true because the client should be agnostic as to which particular PPC protocol is run by the server, as different protocols require quite different generations of shares.
 
-Favoring minimalistic lean clients and simplicity of the client-side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
+Favoring minimalistic lean clients and simplicity of the client side over other considerations, we thus make the uncommon decision that every data owner runs their own server. In PPC lingo, we have as many compute nodes as there are input/data nodes, and they might coincide.
+The resulting design decisions are listed in Table 2.
 
-The resulting and remaining decisions are listed in Table 2.
-
-#### Table 2 – design decisions and their rationale
+#### Table 2. Design decisions and their rationale.
 
 <table cellspacing="0" cellpadding="0" border="1">
  <thead>
   <tr>
-   <td><strong>decision</strong></td>
-   <td><strong>rationale and addressed design goals</strong></td>
+   <td><strong>Design Decision</strong></td>
+   <td><strong>Rationale and Addressed Design Goals</strong></td>
   </tr>
  </thead>
  <tbody>
   <tr>
-   <td><strong>client-server</strong>architecture</td>
+   <td>client–server architecture</td>
    <td>
     <ul>
      <li>offload computationally expensive cryptography to the server <strong>(D1)</strong></li>
-     <li>separate business logic concerns (client-side) from cryptography concerns (server-side)<strong>(C1, D1, O2)</strong></td></li>
+     <li>separate business logic concerns (client-side) from cryptography concerns (server side) <strong>(C1, D1, O2)</strong></td></li>
     </ul>
   </tr>
   <tr>
-   <td>one <strong>dedicated server</strong> per client</td>
+   <td>one dedicated server per client</td>
    <td>
     <ul>
      <li>allows clients to remain lightweight and generalist API wrappers without specific encryption logic <strong>(D3)</strong></li>
      <li>servers can be trusted by their own client/data owner <strong>(S2, S3)</strong></li>
-     <li>for less attack surface, it is possible to keep data entirely server-side with only control flow coming from the client <strong>(S2, S3)</strong></li>
+     <li>for less attack surface, it is possible to keep data entirely server side with only control flow coming from the client <strong>(S2, S3)</strong></li>
      <li>easy to analyze and straightforward to secure <strong>(S4, S2)</strong></li>
      <li>easy to explain and understand in a propaedeutic setting <strong>(C3)</strong></li>
   </tr>
   <tr>
-   <td>solution should be a <strong>middleware</strong></td>
+   <td>solution should be a middleware</td>
    <td>
     <ul>
      <li>encapsulate low-level cryptographic scripts and provide them to the client as high-level macros <strong>(C1, D1)</strong></li>
@@ -198,14 +192,14 @@ The resulting and remaining decisions are listed in Table 2.
    </td>
   </tr>
   <tr>
-   <td>provide <strong>microservices</strong> ...</td>
+   <td>provide microservices</td>
    <td>
     <ul>
-     <li>rebuild business logic piecewise in a privacy friendly fashion <strong>(D2)</strong></li>
+     <li>rebuild business logic piecewise in a privacy-friendly fashion <strong>(D2)</strong></li>
      <li>provide highly optimized microservices for specific business problems instead of slow universal monoliths <strong>(O3, C2)</strong></li>
   </tr>
   <tr>
-   <td>... through a <strong>RESTful API</strong></td>
+   <td>provide RESTful API</td>
    <td>
     <ul>
      <li>easy to provide API wrapper in any programming language <strong>(D4)</strong></li>
@@ -214,7 +208,7 @@ The resulting and remaining decisions are listed in Table 2.
    </td>
   </tr>
   <tr>
-   <td>represent <strong>server-side objects</strong> 1:1 client-side</td>
+   <td>represent server-side objects 1:1 client-side</td>
    <td>
     <ul>
      <li>make client-side code easy to read and write <strong>(D1, C1, C3)</strong></li>
@@ -224,7 +218,7 @@ The resulting and remaining decisions are listed in Table 2.
    </td>
   </tr>
   <tr>
-   <td>implement server middleware in <strong>Python </strong> (optional)</td>
+   <td>implement server middleware in Python (optional)</td>
    <td>
     <ul>
      <li>core middleware can be implemented in pure Python without any additional dependencies except for a webserver <strong>(D3)</strong></li>
