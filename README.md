@@ -15,6 +15,10 @@ by Hendrik Ballhausen (1,*) and Ludwig Christian Hinske (2,3)
 
 (*) Author to whom correspondence should be addressed. 
 
+Informatics **2023**, 10(4), 83; https://doi.org/10.3390/informatics10040083
+
+**Submission received: 24 August 2023 / Revised: 22 October 2023 / Accepted: 23 October 2023 / Published: 31 October 2023**
+
 
 # Abstract
 
