@@ -1,5 +1,5 @@
-Federated Secure Computing: Technical Whitepaper
-================================================
+Federated Secure Computing
+==========================
 
 (C) 2023 by the authors. Licensee MDPI, Basel, Switzerland. This article is an open access article distributed under the terms and conditions of the [Creative Commons Attribution (CC BY) license](https://creativecommons.org/licenses/by/4.0/). Please cite as:
 
