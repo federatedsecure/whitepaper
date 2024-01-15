@@ -892,7 +892,7 @@ pip install federatedsecure-simon
 The middleware will automatically discover the plugin, so there is no more additional setup. Run the server by e.g.
 
 ```
-python ./src/__main__.py --port=55500
+python ./src/__main__.py port=55500
 ```
 
 You can check that the server is running by browsing to
